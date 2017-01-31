@@ -1,0 +1,85 @@
+package Pod::Pandoc;
+use strict;
+use warnings;
+require 5.010;
+
+our $VERSION = '0.3.0';
+
+use Pod::Simple::Pandoc;
+use Pod::Pandoc::Modules;
+use App::pod2pandoc;
+
+1;
+__END__
+
+=head1 NAME
+
+Pod::Pandoc - process Plain Old Documentation format with Pandoc
+
+=begin markdown
+
+# STATUS
+
+[![Build Status](https://travis-ci.org/nichtich/Pod-Pandoc.svg)](https://travis-ci.org/nichtich/Pod-Pandoc)
+[![Coverage Status](https://coveralls.io/repos/nichtich/Pod-Pandoc/badge.svg)](https://coveralls.io/r/nichtich/Pod-Pandoc)
+[![Kwalitee Score](http://cpants.cpanauthors.org/dist/Pod-Pandoc.png)](http://cpants.cpanauthors.org/dist/Pod-Pandoc)
+[![Code Climate Issue Count](https://codeclimate.com/github/nichtich/Pod-Pandoc/badges/issue_count.svg)](https://codeclimate.com/github/nichtich/Pod-Pandoc)
+
+=end markdown
+
+=head1 DESCRIPTION
+
+The Plain Old Documentation format (Pod) is a markup language used to document
+Perl code (see L<perlpod> for reference). Several Perl modules exist to process
+and convert Pod into other formats.
+
+Pod::Pandoc is an attempt to unify and extend Pod converting based on the
+L<Pandoc|http://pandoc.org/> document converter. Pandoc supports more document
+formats in a more detailled and uniform way than any set of Perl modules will
+ever do. For this reason Pod::Pandoc provides methods to convert Pod to the
+Pandoc document model for further processing with Pandoc:
+
+=over
+
+=item
+
+L<pod2pandoc> is a command line script to convert Pod to any format supported
+by Pandoc
+
+=item
+
+L<App::pod2pandoc> provides functionality of L<pod2pandoc> to be used in Perl code
+
+=item
+
+L<Pod::Simple::Pandoc> can parse Pod to the abstract document model of Pandoc
+
+=item
+
+L<Pod::Pandoc::Modules> holds a set of Pod documents of Perl modules
+
+=back
+
+=head1 SEE ALSO
+
+This modules makes obsolete several specialized C<Pod::Simple::...> modules
+such as L<Pod::Simple::HTML>, L<Pod::Simple::XHTML>, L<Pod::Simple::LaTeX>,
+L<Pod::Simple::RTF> L<Pod::Simple::Text>, L<Pod::Simple::Wiki>, L<Pod::WordML>,
+L<Pod::Perldoc::ToToc> etc.
+
+It also covers batch conversion such as L<Pod::Simple::HTMLBatch>,
+L<Pod::ProjectDocs>, L<Pod::POM::Web>, and L<Pod::HtmlTree>.
+
+=encoding utf8
+
+=head1 AUTHOR
+
+Jakob Voß E<lt>jakob.voss@gbv.deE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2017- Jakob Voß
+
+GNU General Public License, Version 2
+
+=cut

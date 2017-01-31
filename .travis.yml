@@ -1,0 +1,28 @@
+language: perl
+
+sudo: required
+dist: trusty    # includes pandoc 1.12.2.1
+
+perl:
+  - "5.24"
+  - "5.22"
+  - "5.20"
+  - "5.18"
+  - "5.16"
+  - "5.14"
+
+install:
+  - cpanm --installdeps . || cat /home/travis/.cpanm/*/build.log
+  - prove -l # make sure normal tests don't fail without pandoc
+  - sudo apt-get install pandoc
+  - pandoc --version
+  - cpanm --quiet --notest --skip-satisfied Test::PerlTidy Dist::Milla
+
+script:
+  # test with milla and pandoc
+  - milla smoke --release --author
+
+after_success:
+  - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
+  - export RELEASE_TESTING=1 AUTHOR_TESTING=1
+  - perl Build.PL && ./Build build && cover -test -report coveralls

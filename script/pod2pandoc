@@ -1,0 +1,89 @@
+#!/usr/bin/env perl
+use strict;
+require 5.010;
+
+my $VERSION = '0.345.0';
+
+use App::pod2pandoc;
+
+pod2pandoc( App::pod2pandoc::parse_arguments(@ARGV) );
+
+=head1 NAME
+
+pod2pandoc - convert Pod to Pandoc document model
+
+=head1 SYNOPSIS
+
+  pod2pandoc [OPTIONS] {INPUT} [ [ -- ] PANDOC_ARGUMENTS ]
+  pod2pandoc [OPTIONS] {INPUT} | pandoc -f json [ PANDOC_ARGUMENTS ]
+
+  pod2pandoc Module.pm -o Module.pdf
+  pod2pandoc script.pl -t markdown
+  pod2pandoc Module::Name -o ModuleName.html
+  pod2pandoc lib/ wiki/ --ext .md --wiki --index Home -t markdown_github
+  pod2pandoc lib/ docs/ --standalone
+
+=head1 DESCRIPTION
+
+pod2pandoc converts POD format documentation (L<perlpod>) to the
+L<Pandoc|http://pandoc.org/> document model so it can be processed to other
+formats (HTML, Markdown, LaTeX, PDF, EPUB, docx, ODT, man, ICML...). By default
+or with input C<-> a document is read from STDIN. Multiple input files are
+combined to one document and listed in document metadata field C<file>.  The
+result is printed in JSON format or passed to Pandoc if additional options such
+as C<-t> or C<-o> are given.
+
+To process a whole directory of C<.pm> and/or C<.pod> files, specify an input
+directory as first input and an optional output directory as second.
+
+=head1 OPTIONS
+
+=over 
+
+=item --help|-h|-?
+
+Print out usage information and exit
+
+=item --data-sections
+
+Parse and include data sections (e.g. C<=for markdown>)
+
+=item --podurl URL
+
+Base URL to Perl modules. Default: C<https://metacpan.org/pod/>
+
+=item --ext EXT
+
+Output file extension when processing a directory. Default: C<html>
+
+=item --index NAME
+
+Index file name when processing a directory. Disable with C<0>
+
+=item --wiki
+
+Don't create output subdirectories and create wikilinks.
+
+=item --update
+
+Only process when input file is newer then output file
+
+=item --quiet
+
+Don't emit warnings and status information
+
+=item ...
+
+All other options are passed through to pandoc
+
+=back
+
+=head1 SEE ALSO
+
+This script is part of L<Pod::Pandoc> and implemented in L<App::pod2pandoc>.
+Together with Pandoc document converter it can be used as customizable
+replacement for specialized Pod converter scripts such as L<pod2html>,
+L<pod2projdocs>, L<pod2man>, L<pod2readme>, L<pod2usage>, L<pod2latex>,
+L<pod2markdown>, and L<pod2text>.
+
+=cut
