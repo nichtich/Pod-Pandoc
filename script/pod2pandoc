@@ -62,7 +62,7 @@ Index file name when processing a directory. Disable with C<0>
 
 =item --wiki
 
-Don't create output subdirectories and create wikilinks.
+Create wikilinks and flat files when processing a directory
 
 =item --update
 

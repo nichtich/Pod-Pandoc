@@ -50,6 +50,9 @@ if ($ENV{RELEASE_TESTING}) {
         subtitle => 'process Plain Old Documentation format with Pandoc',
         base => '../',
     }, 'parse_dir document metadata';
+
+    $files = $parser->parse_dir('script');
+    is_deeply [ keys %$files ], ['pod2pandoc'], 'parse_dir with script';
 }
 
 # parse_string

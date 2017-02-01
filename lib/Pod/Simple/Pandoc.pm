@@ -124,6 +124,16 @@ sub parse_and_merge {
     return $doc;
 }
 
+sub is_perl_file {
+    my $file = shift;
+    return 1 if $file =~ /\.(pm|pod)$/;
+    if ( -x $file ) {
+        open( my $fh, '<', $file ) or return;
+        return 1 if <$fh> =~ /^#!.*perl/;
+    }
+    0;
+}
+
 sub parse_dir {
     my ( $parser, $directory ) = @_;
     my $files = {};
@@ -133,13 +143,13 @@ sub parse_dir {
             no_chdir => 1,
             wanted   => sub {
                 my $file = $_;
-                return if $file !~ /\.(pm|pod)$/;
+                return unless is_perl_file($file);
                 my $doc = $parser->parse_file($file);
                 my $base = File::Spec->abs2rel( $directory, $file );
                 $base =~ s/\.\.$//;
                 $doc->meta->{base} = MetaString $base;
                 $files->{$file} = $doc;
-            }
+              }
         },
         $directory
     );
@@ -151,29 +161,25 @@ sub parse_modules {
     my ( $parser, $dir, %opt ) = @_;
     return unless -d $dir;
 
-    my $modules = {};
+    my $modules = Pod::Pandoc::Modules->new;
+
     foreach my $doc ( values %{ $parser->parse_dir($dir) } ) {
         my $file = $doc->metavalue('file');
         my $module = File::Spec->abs2rel( $file, $dir );
         $module =~ s{\.(pm|pod)$}{}g;
         $module =~ s{/}{::}g;
         if ( ( $doc->metavalue('title') // $module ) eq $module ) {
-            if ( $modules->{$module} ) {
-
-                # TODO: compare file and prefer .pod over .pm if both given
+            if ( not $modules->add( $module => $doc ) and $opt{quiet} ) {
                 warn "$file skipped for "
-                  . $modules->{$module}->metavalue('file')
-                  unless $opt{quiet};
-                next;
+                  . $modules->{$module}->metavalue('file');
             }
-            $modules->{$module} = $doc;
         }
         else {
             warn "$file NAME does not match module\n" unless $opt{quiet};
         }
     }
 
-    bless $modules, 'Pod::Pandoc::Modules';
+    $modules;
 }
 
 my %POD_ELEMENT_TYPES = (

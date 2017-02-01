@@ -12,6 +12,22 @@ use File::Basename qw(dirname);
 use Pandoc::Elements;
 use Carp qw(croak);
 
+sub new {
+    bless( ( $_[1] // {} ), $_[0] );
+}
+
+sub add {
+    my ( $self, $name, $doc ) = @_;
+
+    # TODO: don't override .pod with .pm
+    if ( $self->{$name} ) {
+        return;
+    }
+    else {
+        $self->{$name} = $doc;
+    }
+}
+
 sub module_link {
     my ( $module, $opt ) = @_;
     if ( $opt->{wiki} ) {

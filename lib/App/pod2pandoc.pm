@@ -49,12 +49,14 @@ sub pod2pandoc {
     if ( @$input > 0 and -d $input->[0] ) {
         my $target = @$input > 1 ? pop @$input : $input->[0];
 
+        my $modules = Pod::Pandoc::Modules->new;
         foreach my $dir (@$input) {
-            my $modules = Pod::Simple::Pandoc->new->parse_modules($dir);
-            warn "no .pm or .pod files found in $dir\n"
-              unless %$modules or $opt->{quiet};
-            $modules->serialize( $target, $opt, @args );
+            my $found = Pod::Simple::Pandoc->new->parse_modules($dir);
+            warn "no .pm, .pod or Perl script found in $dir\n"
+              unless %$found or $opt->{quiet};
+            $modules->add( $_ => $found->{$_} ) for keys %$found;
         }
+        $modules->serialize( $target, $opt, @args );
     }
 
     # files and/or module names

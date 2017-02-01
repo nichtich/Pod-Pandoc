@@ -38,10 +38,12 @@ is slurp($target),
 # convert directory
 
 my ($stdout, $stderr) = output_from {
-    pod2pandoc( ['lib/', 't', $dir], {'ext' => 'md', wiki => 1, update => 1} );
+    pod2pandoc( ['lib/', 'script', 't', $dir], 
+                {'ext' => 'md', wiki => 1, update => 1} );
 };
+note $stdout;
 is( (scalar split "\n", $stdout), 6, 'pod2pandoc directory');
-is $stderr, "no .pm or .pod files found in t\n", 'warning';
+is $stderr, "no .pm, .pod or Perl script found in t\n", 'warning';
 
 ok -e catfile($dir, 'Pod-Simple-Pandoc.md'), 'option wiki';
 
