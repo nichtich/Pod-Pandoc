@@ -156,7 +156,7 @@ sub parse_dir {
                 $base =~ s/\.\.$//;
                 $doc->meta->{base} = MetaString $base;
                 $files->{$file} = $doc;
-              }
+            }
         },
         $directory
     );

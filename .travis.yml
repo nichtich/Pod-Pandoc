@@ -20,7 +20,7 @@ install:
 
 script:
   # test with milla and pandoc
-  - milla smoke --release --author
+  - milla smoke --release
 
 after_success:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls

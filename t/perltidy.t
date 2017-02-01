@@ -2,8 +2,8 @@ use strict;
 use Test::More;
 use File::Find;
 
-plan skip_all => 'these tests are for author and release candidate testing'
-  unless $ENV{RELEASE_TESTING} or $ENV{AUTHOR_TESTING};
+plan skip_all => 'these tests are for author testing'
+  unless $ENV{AUTHOR_TESTING};
 
 use_ok 'Test::PerlTidy';
 
