@@ -1,6 +1,8 @@
 Revision history for Pod-Pandoc
 
 {{$NEXT}}
+
+0.3.1  2017-02-01 15:45:45 CET
     - Add method parse_module
     - Implement option update
     - Include Perl scripts in parse_dir
