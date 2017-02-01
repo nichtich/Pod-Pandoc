@@ -60,11 +60,8 @@ sub _parser {
 sub parse_file {
     my ( $self, $file ) = @_;
 
-    {
-        # Pod::Simple::parse_file does not detect this
-        no warnings;
-        croak "Can't use directory as a source for parse_file" if -d $file;
-    }
+    # Pod::Simple::parse_file does not detect this
+    croak "Can't use directory as a source for parse_file" if -d $file;
 
     my $doc = $self->parse_tree( $self->_parser->parse_file($file)->root );
 
@@ -73,6 +70,19 @@ sub parse_file {
     }
 
     $doc;
+}
+
+sub parse_module { # TODO: document
+    my ( $self, $name ) = @_;
+
+    # map module name to name
+    if ( $name ne '-' and not -e $name ) {
+        run3 [ 'perldoc', '-lm', $name ], undef, \$name;
+        croak $? if $?;
+        chomp $name;
+    }
+
+    $self->parse_file($name);
 }
 
 sub parse_string {
@@ -103,12 +113,7 @@ sub parse_and_merge {
 
     foreach my $file (@input) {
 
-        # map module names to files
-        if ( $file ne '-' and !-e $file ) {
-            run3 [ 'perldoc', '-lm', $file ], undef, \$file;
-            exit $? if $?;
-        }
-        my $cur = $self->parse_file($file);
+        my $cur = $self->parse_module($file);
         if ($doc) {
             push @{ $doc->content }, @{ $cur->content };
         }

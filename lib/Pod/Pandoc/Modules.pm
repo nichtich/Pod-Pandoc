@@ -8,6 +8,7 @@ our $VERSION = '0.30';
 use File::Path qw(make_path);
 use File::Find;
 use File::Spec;
+use File::stat;
 use File::Basename qw(dirname);
 use Pandoc::Elements;
 use Carp qw(croak);
@@ -93,7 +94,10 @@ sub serialize {
         $name .= '.' . ( $opt->{ext} // 'html' );
         my $target = File::Spec->catfile( $dir, $name );
 
-        # TODO: respect option update
+        if ( $opt->{update} and -e $target ) {
+            next if stat($file)->[9] <= stat($target)->[9];
+        }
+
         make_path( dirname($target) );
         $doc->to_pandoc( -o => $target, @args );
         say "$file => $target" unless $opt->{quiet};
