@@ -93,13 +93,15 @@ actual use of it. See L<http://pandoc.org/installing.html> for installation.
 
 =head1 SEE ALSO
 
-This modules makes obsolete several specialized C<Pod::Simple::...> modules
-such as L<Pod::Simple::HTML>, L<Pod::Simple::XHTML>, L<Pod::Simple::LaTeX>,
-L<Pod::Simple::RTF> L<Pod::Simple::Text>, L<Pod::Simple::Wiki>, L<Pod::WordML>,
-L<Pod::Perldoc::ToToc> etc.
+This module is basde on the wrapper module L<Pandoc> to execute pandoc from Perl
+and on the module L<Pandoc::Elements> for pandoc document processing.
 
-It also covers batch conversion such as L<Pod::Simple::HTMLBatch>,
-L<Pod::ProjectDocs>, L<Pod::POM::Web>, and L<Pod::HtmlTree>.
+This module makes obsolete several specialized C<Pod::Simple::...> modules such
+as L<Pod::Simple::HTML>, L<Pod::Simple::XHTML>, L<Pod::Simple::LaTeX>,
+L<Pod::Simple::RTF> L<Pod::Simple::Text>, L<Pod::Simple::Wiki>, L<Pod::WordML>,
+L<Pod::Perldoc::ToToc> etc. It also covers batch conversion such as
+L<Pod::Simple::HTMLBatch>, L<Pod::ProjectDocs>, L<Pod::POM::Web>, and
+L<Pod::HtmlTree>.
 
 =encoding utf8
 
