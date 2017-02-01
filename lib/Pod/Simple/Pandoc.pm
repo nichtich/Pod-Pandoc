@@ -72,15 +72,13 @@ sub parse_file {
     $doc;
 }
 
-sub parse_module {    # TODO: document
+sub parse_module {
     my ( $self, $name ) = @_;
 
     # map module name to name
-    if ( $name ne '-' and not -e $name ) {
-        run3 [ 'perldoc', '-lm', $name ], undef, \$name;
-        croak $? if $?;
-        chomp $name;
-    }
+    run3 [ 'perldoc', '-lm', $name ], undef, \$name;
+    croak $? if $?;
+    chomp $name;
 
     $self->parse_file($name);
 }
@@ -113,7 +111,11 @@ sub parse_and_merge {
 
     foreach my $file (@input) {
 
-        my $cur = $self->parse_module($file);
+        my $cur =
+          ( $file ne '-' and not -e $file )
+          ? $self->parse_module($file)
+          : $self->parse_file($file);
+
         if ($doc) {
             push @{ $doc->content }, @{ $cur->content };
         }
@@ -154,7 +156,7 @@ sub parse_dir {
                 $base =~ s/\.\.$//;
                 $doc->meta->{base} = MetaString $base;
                 $files->{$file} = $doc;
-            }
+              }
         },
         $directory
     );
@@ -447,10 +449,9 @@ filename is put into document metadata field C<file> and the module name. The
 NAME section, if given, is additionally split into metadata fields C<title> and
 C<subtitle>.
 
-=head2 parse_and_merge( @files_or_modules )
+=head2 parse_module( $module )
 
-Reads Pod from files or modules given by name and merges them into one 
-L<Pandoc::Document> by concatenation.
+Reads Pod from a module given by name such as C<"Pod::Pandoc">.
 
 =head2 parse_string( $string )
 
@@ -471,6 +472,12 @@ Same as method C<parse_dir> but returns a L<Pod::Simple::Pandoc::Modules>
 instance that maps module names to L<Pandoc::Document> instances. The source
 directory can also be specified with option C<source>. Option C<quiet> disables
 warnings for skipped files.
+
+=head2 parse_and_merge( @files_or_modules )
+
+Reads Pod from files or modules given by name and merges them into one 
+L<Pandoc::Document> by concatenation.
+
 
 =head1 MAPPING
 
