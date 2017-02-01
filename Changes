@@ -1,8 +1,10 @@
 Revision history for Pod-Pandoc
 
 {{$NEXT}}
+    - Add method parse_module
     - Implement option update
     - Include Perl scripts in parse_dir
+    - Add GitHub wiki and Read the Docs as examples
 
 0.3.0  2017-02-01 07:44:58 CET
     - Split from Pandoc-Elements. See there for previous changes.
