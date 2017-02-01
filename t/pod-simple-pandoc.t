@@ -48,7 +48,8 @@ if ( $ENV{RELEASE_TESTING} ) {
       'parse_dir document metadata';
 
     $files = $parser->parse_dir('script');
-    is_deeply [ keys %$files ], ['pod2pandoc'], 'parse_dir with script';
+    my @keys = keys %$files;
+    like $keys[0], qr{^(script/)?pod2pandoc}, 'parse_dir with script';
 }
 
 # parse_string

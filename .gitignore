@@ -5,4 +5,9 @@
 MYMETA.*
 !META.json
 /.prove
+*.bak
+*.tdy
 wiki
+docs/**
+!docs/*.rst
+!docs/conf.py

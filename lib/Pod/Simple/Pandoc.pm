@@ -72,7 +72,7 @@ sub parse_file {
     $doc;
 }
 
-sub parse_module { # TODO: document
+sub parse_module {    # TODO: document
     my ( $self, $name ) = @_;
 
     # map module name to name
@@ -134,7 +134,7 @@ sub is_perl_file {
     return 1 if $file =~ /\.(pm|pod)$/;
     if ( -x $file ) {
         open( my $fh, '<', $file ) or return;
-        return 1 if <$fh> =~ /^#!.*perl/;
+        return 1 if $fh and ( <$fh> // '' ) =~ /^#!.*perl/;
     }
     0;
 }
@@ -154,7 +154,7 @@ sub parse_dir {
                 $base =~ s/\.\.$//;
                 $doc->meta->{base} = MetaString $base;
                 $files->{$file} = $doc;
-              }
+            }
         },
         $directory
     );
