@@ -82,7 +82,6 @@ wikilinks in rst output format:
   pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
   cd docs
   perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' *.rst
-  cat toctree >> Pod-Pandoc.rst
   make html
 
 The result is published at L<http://pod-pandoc.readthedocs.io/>.

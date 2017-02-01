@@ -104,4 +104,3 @@ COPYRIGHT AND LICENSE
 Copyright 2017- Jakob Voß
 
 GNU General Public License, Version 2
-

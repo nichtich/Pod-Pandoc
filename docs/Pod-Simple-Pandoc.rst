@@ -64,12 +64,10 @@ filename is put into document metadata field \ ``file``\  and the module
 name. The NAME section, if given, is additionally split into metadata
 fields \ ``title``\  and \ ``subtitle``.
 
-parse\_and\_merge( @files\_or\_modules )
-----------------------------------------
+parse\_module( $module )
+------------------------
 
-Reads Pod from files or modules given by name and merges them into one
-\ `Pandoc::Document <https://metacpan.org/pod/Pandoc::Document>`__\  by
-concatenation.
+Reads Pod from a module given by name such as \ ``"Pod::Pandoc"``.
 
 parse\_string( $string )
 ------------------------
@@ -98,6 +96,13 @@ instance that maps module names to
 \ `Pandoc::Document <https://metacpan.org/pod/Pandoc::Document>`__\ 
 instances. The source directory can also be specified with option
 \ ``source``. Option \ ``quiet``\  disables warnings for skipped files.
+
+parse\_and\_merge( @files\_or\_modules )
+----------------------------------------
+
+Reads Pod from files or modules given by name and merges them into one
+\ `Pandoc::Document <https://metacpan.org/pod/Pandoc::Document>`__\  by
+concatenation.
 
 MAPPING
 =======
