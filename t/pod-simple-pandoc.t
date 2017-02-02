@@ -5,7 +5,7 @@ use Pandoc;
 use Pod::Simple::Pandoc;
 use Test::Exception;
 
-my $parser = new_ok 'Pod::Simple::Pandoc';
+my $parser = Pod::Simple::Pandoc->new();
 my $file   = 'lib/Pod/Simple/Pandoc.pm';
 
 # parse_file
@@ -24,14 +24,16 @@ my $file   = 'lib/Pod/Simple/Pandoc.pm';
       },
       'metadata';
 
-    foreach ('', 'Pandoc::Elements') {
+    is_deeply $doc->query( RawBlock => sub { $_->format } ),
+      [qw(markdown html html tex tex)], 'data sections as RawBlock';
+
+    foreach ( '', 'Pandoc::Elements' ) {
         dies_ok { $parser->parse_file($_) } 'parse_file not found';
     }
 }
 
 # parse module
 isa_ok $parser->parse_module('Pandoc::Elements'), 'Pandoc::Document';
-
 
 if ( $ENV{RELEASE_TESTING} ) {
     my $files = $parser->parse_dir('lib');
@@ -77,12 +79,15 @@ POD
 }
 
 # data-sections
-if ( pandoc and pandoc->version >= '1.12' and pandoc->version < '1.18' ) {
+if ( pandoc and pandoc->version >= '1.12' ) {
     my %opt = ( 'data-sections' => 1 );
+
     my $doc = Pod::Simple::Pandoc->new(%opt)->parse_file($file);
     is_deeply $doc->query( Header => sub { $_->level == 3 ? $_->string : () } ),
       ['Examples'],
       'data-sections';
+
+    is_deeply [], $doc->query( RawBlock => sub { $_->format } ), 'no RawBlack';
 }
 
 done_testing;

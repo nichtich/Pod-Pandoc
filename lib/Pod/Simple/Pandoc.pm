@@ -19,12 +19,11 @@ use utf8;
 sub new {
     my ( $class, %opt ) = @_;
 
-    my @targets = qw(html HTML tex latex TeX LaTeX);
+    $opt{targets} //= [];
     if ( $opt{'data-sections'} ) {
         Pandoc->require('1.12');
-        push @targets, pandoc->input_formats;
+        push @{ $opt{targets} }, pandoc->input_formats;
     }
-    $opt{targets} = \@targets;
 
     $opt{podurl} //= 'https://metacpan.org/pod/';
 
@@ -40,7 +39,7 @@ sub _parser {
     $parser->merge_text(1);          # emit text nodes combined
     $parser->no_errata_section(1);   # omit errata section
     $parser->complain_stderr(1);     # TODO: configure
-    $parser->accept_targets( @{ $self->{targets} } );
+    $parser->accept_targets('*');    # include all data sections
 
     # remove shortest leading whitespace string from verbatim sections
     $parser->strip_verbatim_indent(
@@ -156,7 +155,7 @@ sub parse_dir {
                 $base =~ s/\.\.$//;
                 $doc->meta->{base} = MetaString $base;
                 $files->{$file} = $doc;
-            }
+              }
         },
         $directory
     );
@@ -332,20 +331,26 @@ sub _pod_data {
     my $content = join "\n\n", map { $_->[2] }
       grep { $_->[0] eq 'Data' } @$element[ 2 .. $length - 1 ];
 
+    # cleanup HTML and Tex blocks
     if ( $target eq 'html' ) {
         $content = "<div>$content</div>" if $content !~ /^<.+>$/s;
-        RawBlock 'html', $content . "\n";
     }
     elsif ( $target =~ /^(la)?tex$/ ) {
 
         # TODO: more intelligent check & grouping, especiall at the end
         $content = "\\begingroup $content \\endgroup" if $content !~ /^[\\{]/;
-        RawBlock 'tex', "$content\n";
+        $target = 'tex';
     }
-    elsif ( grep { $target eq $_ } @{ $self->{targets} } ) {
-        my $doc = pandoc->parse( $target => $content, '--smart' );
-        @{ $doc->content };
+
+    # parse and insert known formats if requested
+    my $format = $target eq 'tex' ? 'latex' : $target;
+    if ( grep { $format eq $_ } @{ $self->{targets} } ) {
+        utf8::decode($content);
+        my $doc = pandoc->parse( $format => $content, '--smart' );
+        return @{ $doc->content };
     }
+
+    RawBlock $target, "$content\n";
 }
 
 # map a list (any kind)
@@ -431,7 +436,7 @@ directly convert to PDF:
 =item data-sections
 
 Parse L<data sections|/Data sections> of pandoc input formats with L<Pandoc>
-and merge them into the document (disabled by default).
+and merge them into the document (instead of passing them as C<RawBlock>).
 
 =item podurl
 
@@ -579,12 +584,12 @@ An C<=over>...C<=back> region containing no C<=item> is mapped to C<BlockQuote>.
 
 =head2 Data sections
 
-Data sections with target C<html> or C<latex> are passed as C<RawBlock>.
-C<HTML>, C<LaTeX>, C<TeX>, and C<tex> are recognized as alias.
+Data sections are passed as C<RawBlock>. C<HTML>, C<LaTeX>, C<TeX>, and C<tex>
+are recognized as alias for C<html> and C<tex>.
 
-With option C<parse-data-sections> additional targets supported by pandoc as
-input format (C<markdown>, C<markdown_github>, C<rst>...) are parsed with
-L<Pandoc> and merged into the result document.
+With option C<parse-data-sections> targets supported by pandoc as input format
+(C<markdown>, C<markdown_github>, C<rst>...) are parsed with L<Pandoc> and
+merged into the result document.
 
 =begin markdown
 
