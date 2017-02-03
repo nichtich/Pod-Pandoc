@@ -1,0 +1,83 @@
+====================
+Pod::Pandoc::Modules
+====================
+
+NAME
+====
+
+Pod::Pandoc::Modules - set of parsed documentation of Perl modules
+
+SYNOPSIS
+========
+
+::
+
+      use Pod::Simple::Pandoc;
+
+      my $modules = Pod::Simple::Pandoc->new->parse_modules('lib');
+      $modules->serialize( { target => 'doc' }, '--template' => '...' ] ); # TODO
+
+DESCRIPTION
+===========
+
+Module to serialize Pod from a set of parsed Perl or Pod files. Can be
+configured via templates, document rewriting etc. and used with many
+output formats (html, markdown, and rst to be embedded in static site
+generators such as Jekyll).
+
+See \ `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  for how to create
+instances of this module.
+
+EXAMPLES
+========
+
+Create GitHub Wiki pages:
+
+::
+
+        $modules->serialize(
+            { dir => 'wiki', ext => 'md', index => 'Home', wiki => 1 },
+            ...
+        );
+
+METHODS
+=======
+
+serialize ( [ $dir ] [, \\%options ] [, @args ] )
+-------------------------------------------------
+
+Serialize a set of modules into a given directory.
+
+This method is experimental and may change!
+
+dir
+    Output directory.
+
+ext
+    Output file extension. Set to the value of \ ``format``\  by
+    default.
+
+index
+    Index filename (with or without extension). Set to \ ``index``\  by
+    default. Use a false value to disable index generation.
+
+wiki
+    Don't create subdirectories and use wiki links for references
+    between files. instead.
+
+update
+    Generate target files even if source files have not been updated.
+
+quiet
+    Don't emit warnings and status information.
+
+index ( %options )
+------------------
+
+Create and return an index document as
+\ `Pandoc::Document <https://metacpan.org/pod/Pandoc::Document>`__.
+
+SEE ALSO
+========
+
+This module is part of \ `Pod::Pandoc <Pod-Pandoc>`__.
