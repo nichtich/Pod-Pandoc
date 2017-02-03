@@ -6,24 +6,36 @@ use Pod::Simple::Pandoc;
 use Pod::Pandoc::Modules;
 use Test::Exception;
 
-plan skip_all => 'these tests are for release candidate testing'
-  unless $ENV{RELEASE_TESTING};
+my $modules = Pod::Pandoc::Modules->new({ 
+    'Pod::Simple::Pandoc' => Pod::Simple::Pandoc->new->parse_file('lib/Pod/Simple/Pandoc.pm') 
+});
 
-# TODO: modify to do basic tests without pandoc executable
+sub is_index {
+    my ( $name, $opt, $meta, $url, $title ) = @_;
 
-my $file = 'lib/Pod/Simple/Pandoc.pm';
+    is_deeply $modules->index(%$opt),
+      Document( $meta, [
+            DefinitionList [ [
+                [
+                    Link attributes {},
+                    [ Str 'Pod::Simple::Pandoc' ],
+                    [ $url, $title ]
+                ],
+                [ [ Plain [ Str 'convert Pod to Pandoc document model' ] ] ]
+            ] ]
+        ]), $name;
+}
 
-my $modules = { 
-    'Pod::Simple::Pandoc' => Pod::Simple::Pandoc->new->parse_file($file)
-};
-bless $modules, 'Pod::Pandoc::Modules';
+is_index(
+    'index (default)',
+    {}, {},
+    'Pod/Simple/Pandoc.html', 'Pod::Simple::Pandoc'
+);
 
-is $modules->index->to_markdown,
-   "[Pod::Simple::Pandoc](Pod/Simple/Pandoc.html \"Pod::Simple::Pandoc\")\n",
-   'index';
-
-is $modules->index( wiki => 1 )->to_markdown,
-   "[Pod::Simple::Pandoc](Pod-Simple-Pandoc \"wikilink\")\n",
-   'wiki index';
+is_index(
+    'index (wiki & title)',
+    { wiki => 1, title => 'test' }, { title => MetaString 'test' },
+    'Pod-Simple-Pandoc', 'wikilink'
+);
 
 done_testing;

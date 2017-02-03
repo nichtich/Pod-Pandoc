@@ -48,10 +48,18 @@ sub module_link {
 sub index {
     my ( $modules, %opt ) = @_;
 
-    my $meta = {};    # TODO
+    # TODO: extend, document, and test metadata
+    my %meta = map { $_ => MetaString "" . $opt{$_} }
+      grep { defined $opt{$_} } qw{title};
 
-    Document $meta,
-      [ map { Para [ module_link( $_, \%opt ) ] } sort keys %$modules ];
+    my @definitions = map {
+        [
+            [ module_link( $_, \%opt ) ],
+            [ [ Plain [ Str $modules->{$_}->metavalue('subtitle') ] ] ]
+        ]
+    } sort keys %$modules;
+
+    Document \%meta, [ DefinitionList \@definitions ];
 }
 
 sub serialize {
