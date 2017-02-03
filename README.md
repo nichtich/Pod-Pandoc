@@ -32,12 +32,14 @@ by Pandoc
 
 # EXAMPLES
 
+GitHub wiki and Sphinx documentation are automatically build on each commit to
+the `master` branch (see script `deploy.sh`).
+
 ## GitHub wiki
 
 The [GitHub wiki of this project](https://github.com/nichtich/Pod-Pandoc/wiki)
-is automatically populated with its module documentation. The wiki is updated
-on each commit to the `master` branch (see script `deploy.sh`). Wiki pages
-are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following:
+is automatically populated with its module documentation.  Wiki pages
+are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following (see script `update-wiki.sh`:
 
     pod2pandoc lib/ script/ wiki/ --ext md --index Home --wiki -t markdown_github
 
@@ -46,20 +48,13 @@ are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following:
 The [Sphinx documentation generator](https://sphinx-doc.org/) recommends
 documents in reStructureText format. It further requires a configuration file
 `conf.py` and some links need to be adjusted because Pandoc does not support
-wikilinks in rst output format:
+wikilinks in rst output format (see script `update-docs.sh`:
 
     pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
     perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
     make -C docs html
 
 The result is published automatically at [http://pod-pandoc.rtfd.io/](http://pod-pandoc.rtfd.io/).
-
-## GitHub pages
-
-The documentation can be published in a similar way via GitHub pages (after
-enabling this feature in your repository setting):
-
-    pod2pandoc lib/ script/ docs --ext md --wiki -t markdown_github
 
 # REQUIREMENTS
 

@@ -3,7 +3,7 @@ use strict;
 use warnings;
 require 5.010;
 
-our $VERSION = '0.3.1';
+our $VERSION = '0.3.2';
 
 use Pod::Simple::Pandoc;
 use Pod::Pandoc::Modules;

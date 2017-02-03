@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use 5.010;
 
-our $VERSION = '0.3.0';
+our $VERSION = '0.3.2';
 
 use Getopt::Long qw(:config pass_through);
 use Pod::Usage;

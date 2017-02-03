@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use 5.010;
 
-our $VERSION = '0.345.0';
+our $VERSION = '0.346.0';
 
 use Pod::Simple::SimpleTree;
 use Pandoc::Elements;
