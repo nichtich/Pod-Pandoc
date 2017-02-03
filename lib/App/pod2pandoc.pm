@@ -67,7 +67,7 @@ sub pod2pandoc {
         if (@args) {
             pandoc->require('1.12.1');
             $doc->pandoc_version( pandoc->version );
-            $doc->to_pandoc(@args);
+            print $doc->to_pandoc(@args);
         }
         else {
             print $doc->to_json, "\n";
