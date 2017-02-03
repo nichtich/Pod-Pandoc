@@ -38,4 +38,7 @@ is_index(
     'Pod-Simple-Pandoc', 'wikilink'
 );
 
+$modules = Pod::Simple::Pandoc->parse_modules('t/examples');
+is $modules->{Empty}->metavalue('title'), 'Empty', 'title without NAME';
+
 done_testing;

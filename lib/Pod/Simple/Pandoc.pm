@@ -174,7 +174,8 @@ sub parse_modules {
         my $module = File::Spec->abs2rel( $file, $dir );
         $module =~ s{\.(pm|pod)$}{}g;
         $module =~ s{/}{::}g;
-        if ( ( $doc->metavalue('title') // $module ) eq $module ) {
+        $doc->meta->{title} //= MetaString $module;
+        if ( $doc->metavalue('title') eq $module ) {
             if ( not $modules->add( $module => $doc ) and $opt{quiet} ) {
                 warn "$file skipped for "
                   . $modules->{$module}->metavalue('file');

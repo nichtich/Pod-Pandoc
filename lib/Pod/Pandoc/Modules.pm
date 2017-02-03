@@ -55,7 +55,7 @@ sub index {
     my @definitions = map {
         [
             [ module_link( $_, \%opt ) ],
-            [ [ Plain [ Str $modules->{$_}->metavalue('subtitle') ] ] ]
+            [ [ Plain [ Str $modules->{$_}->metavalue('subtitle') // '' ] ] ]
         ]
     } sort keys %$modules;
 
