@@ -350,7 +350,9 @@ sub _pod_data {
         return @{ $doc->content };
     }
 
-    RawBlock $target, "$content\n";
+    RawBlock( $target, "$content\n" );
+
+    # TODO: add Null element to not merge with following content
 }
 
 # map a list (any kind)

@@ -20,7 +20,9 @@ Pod::Pandoc is an attempt to unify and extend Pod converting based on the
 [Pandoc](http://pandoc.org/) document converter. Pandoc supports more document
 formats in a more detailled and uniform way than any set of Perl modules will
 ever do. For this reason Pod::Pandoc provides methods to convert Pod to the
-Pandoc document model for further processing with Pandoc:
+Pandoc document model for further processing with Pandoc.
+
+# OUTLINE
 
 - [pod2pandoc](https://metacpan.org/pod/pod2pandoc) is a command line script to convert Pod to any format supported
 by Pandoc
@@ -30,29 +32,34 @@ by Pandoc
 
 # EXAMPLES
 
+## GitHub wiki
+
 The [GitHub wiki of this project](https://github.com/nichtich/Pod-Pandoc/wiki)
-is filled with wiki pages based on the documentation of each Perl module. The
-wiki pages are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following:
+is automatically populated with its module documentation. The wiki is updated
+on each commit to the `master` branch (see script `deploy.sh`). Wiki pages
+are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following:
 
     pod2pandoc lib/ script/ wiki/ --ext md --index Home --wiki -t markdown_github
+
+## Sphinx and Read The Docs
+
+The [Sphinx documentation generator](https://sphinx-doc.org/) recommends
+documents in reStructureText format. It further requires a configuration file
+`conf.py` and some links need to be adjusted because Pandoc does not support
+wikilinks in rst output format:
+
+    pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
+    perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
+    make -C docs html
+
+The result is published automatically at [http://pod-pandoc.rtfd.io/](http://pod-pandoc.rtfd.io/).
+
+## GitHub pages
 
 The documentation can be published in a similar way via GitHub pages (after
 enabling this feature in your repository setting):
 
     pod2pandoc lib/ script/ docs --ext md --wiki -t markdown_github
-
-For generation of documentation with Sphinx we need reStructureText format. The
-index file and a configuration file `conf.py` need to be created manually.
-Links between files further need to be adjusted because Pandoc does not support
-wikilinks in rst output format:
-
-    pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
-    cd docs
-    perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' *.rst
-    cat toctree >> Pod-Pandoc.rst
-    make html
-
-The result is published at [http://pod-pandoc.readthedocs.io/](http://pod-pandoc.readthedocs.io/).
 
 # REQUIREMENTS
 
@@ -61,13 +68,15 @@ actual use of it. See [http://pandoc.org/installing.html](http://pandoc.org/inst
 
 # SEE ALSO
 
-This modules makes obsolete several specialized `Pod::Simple::...` modules
-such as [Pod::Simple::HTML](https://metacpan.org/pod/Pod::Simple::HTML), [Pod::Simple::XHTML](https://metacpan.org/pod/Pod::Simple::XHTML), [Pod::Simple::LaTeX](https://metacpan.org/pod/Pod::Simple::LaTeX),
-[Pod::Simple::RTF](https://metacpan.org/pod/Pod::Simple::RTF) [Pod::Simple::Text](https://metacpan.org/pod/Pod::Simple::Text), [Pod::Simple::Wiki](https://metacpan.org/pod/Pod::Simple::Wiki), [Pod::WordML](https://metacpan.org/pod/Pod::WordML),
-[Pod::Perldoc::ToToc](https://metacpan.org/pod/Pod::Perldoc::ToToc) etc.
+This module is basde on the wrapper module [Pandoc](https://metacpan.org/pod/Pandoc) to execute pandoc from Perl
+and on the module [Pandoc::Elements](https://metacpan.org/pod/Pandoc::Elements) for pandoc document processing.
 
-It also covers batch conversion such as [Pod::Simple::HTMLBatch](https://metacpan.org/pod/Pod::Simple::HTMLBatch),
-[Pod::ProjectDocs](https://metacpan.org/pod/Pod::ProjectDocs), [Pod::POM::Web](https://metacpan.org/pod/Pod::POM::Web), and [Pod::HtmlTree](https://metacpan.org/pod/Pod::HtmlTree).
+This module makes obsolete several specialized `Pod::Simple::...` modules such
+as [Pod::Simple::HTML](https://metacpan.org/pod/Pod::Simple::HTML), [Pod::Simple::XHTML](https://metacpan.org/pod/Pod::Simple::XHTML), [Pod::Simple::LaTeX](https://metacpan.org/pod/Pod::Simple::LaTeX),
+[Pod::Simple::RTF](https://metacpan.org/pod/Pod::Simple::RTF) [Pod::Simple::Text](https://metacpan.org/pod/Pod::Simple::Text), [Pod::Simple::Wiki](https://metacpan.org/pod/Pod::Simple::Wiki), [Pod::WordML](https://metacpan.org/pod/Pod::WordML),
+[Pod::Perldoc::ToToc](https://metacpan.org/pod/Pod::Perldoc::ToToc) etc. It also covers batch conversion such as
+[Pod::Simple::HTMLBatch](https://metacpan.org/pod/Pod::Simple::HTMLBatch), [Pod::ProjectDocs](https://metacpan.org/pod/Pod::ProjectDocs), [Pod::POM::Web](https://metacpan.org/pod/Pod::POM::Web), and
+[Pod::HtmlTree](https://metacpan.org/pod/Pod::HtmlTree).
 
 # AUTHOR
 

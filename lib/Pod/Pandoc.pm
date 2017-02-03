@@ -38,7 +38,9 @@ Pod::Pandoc is an attempt to unify and extend Pod converting based on the
 L<Pandoc|http://pandoc.org/> document converter. Pandoc supports more document
 formats in a more detailled and uniform way than any set of Perl modules will
 ever do. For this reason Pod::Pandoc provides methods to convert Pod to the
-Pandoc document model for further processing with Pandoc:
+Pandoc document model for further processing with Pandoc.
+
+=head1 OUTLINE
 
 =over
 
@@ -63,28 +65,29 @@ L<Pod::Pandoc::Modules> holds a set of Pod documents of Perl modules
 
 =head1 EXAMPLES
 
+GitHub wiki and Sphinx documentation are automatically build on each commit to
+the C<master> branch (see script C<deploy.sh>).
+
+=head2 GitHub wiki
+
 The L<GitHub wiki of this project|https://github.com/nichtich/Pod-Pandoc/wiki>
-is filled with wiki pages based on the documentation of each Perl module. The
-wiki pages are created with L<pod2pandoc> as following:
+is automatically populated with its module documentation.  Wiki pages
+are created with L<pod2pandoc> as following (see script C<update-wiki.sh>:
 
   pod2pandoc lib/ script/ wiki/ --ext md --index Home --wiki -t markdown_github
 
-The documentation can be published in a similar way via GitHub pages (after
-enabling this feature in your repository setting):
+=head2 Sphinx and Read The Docs
 
-  pod2pandoc lib/ script/ docs --ext md --wiki -t markdown_github
-
-For generation of documentation with Sphinx we need reStructureText format. The
-index file and a configuration file C<conf.py> need to be created manually.
-Links between files further need to be adjusted because Pandoc does not support
-wikilinks in rst output format:
+The L<Sphinx documentation generator|https://sphinx-doc.org/> recommends
+documents in reStructureText format. It further requires a configuration file
+C<conf.py> and some links need to be adjusted because Pandoc does not support
+wikilinks in rst output format (see script C<update-docs.sh>:
 
   pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
-  cd docs
-  perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' *.rst
-  make html
+  perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
+  make -C docs html
 
-The result is published at L<http://pod-pandoc.readthedocs.io/>.
+The result is published automatically at L<http://pod-pandoc.rtfd.io/>.
 
 =head1 REQUIREMENTS
 
@@ -116,3 +119,13 @@ Copyright 2017- Jakob Voß
 GNU General Public License, Version 2
 
 =cut
+
+=begin rst
+
+.. toctree::
+   :hidden:
+   :glob:
+   
+   *
+
+=end rst

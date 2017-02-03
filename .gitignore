@@ -8,6 +8,4 @@ MYMETA.*
 *.bak
 *.tdy
 wiki
-docs/**
-!docs/*.rst
-!docs/conf.py
+docs
