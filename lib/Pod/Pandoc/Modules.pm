@@ -20,13 +20,14 @@ sub new {
 sub add {
     my ( $self, $name, $doc ) = @_;
 
-    # TODO: don't override .pod with .pm
-    if ( $self->{$name} ) {
-        return;
+    if ( my $given = $self->{$name} ) {
+        return    # override .pm with .pod, otherwise skip
+          if $given->metavalue('file') !~ /\.pm/
+          or $doc->metavalue('file') !~ /\.pod/;
     }
-    else {
-        $self->{$name} = $doc;
-    }
+    $doc->meta->{title} //= MetaString $name;
+
+    $self->{$name} = $doc;
 }
 
 sub module_link {
@@ -160,16 +161,13 @@ as Jekyll).
 
 See L<Pod::Simple::Pandoc> for how to create instances of this module.
 
-=head1 EXAMPLES
-
-Create GitHub Wiki pages:
-
-    $modules->serialize(
-        { dir => 'wiki', ext => 'md', index => 'Home', wiki => 1 },
-        ...
-    );
-
 =head1 METHODS
+
+=head2 add( $name => $doc )
+
+Add a module given as L<Pandoc::Document> unless a module of same C<$name>
+already exists. As an exception a parsed L<.pod> file will override a parsed
+L<.pm> file. The document title is set to the module name if missing.
 
 =head2 serialize ( [ $dir ] [, \%options ] [, @args ] )
 

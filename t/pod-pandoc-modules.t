@@ -6,10 +6,32 @@ use Pod::Simple::Pandoc;
 use Pod::Pandoc::Modules;
 use Test::Exception;
 
+my $parser = Pod::Simple::Pandoc->new;
+
+# add
+{
+    my $modules = Pod::Pandoc::Modules->new;
+    my $name = 'Pod::Simple::Pandoc';
+    my $file = 'lib/Pod/Simple/Pandoc.pm';
+    my $doc = $parser->parse_file($file);
+    ok $modules->add( $name => $doc ), 'add';
+    is $modules->{$name}, $doc, 'added'; 
+
+    ok !$modules->add( $name => $parser->parse_file('script/pod2pandoc') );
+    is $modules->{$name}, $doc, 'add doesn\'t override'; 
+
+    $file = 't/examples/Pandoc.pod';
+    ok $modules->add( $name => $parser->parse_file($file) ), 'add';
+    is $modules->{$name}->metavalue('file'), $file, '.pod overrides .pm';
+    is $modules->{$name}->metavalue('title'), $name, 'title without NAME';
+}
+
+# constructor
 my $modules = Pod::Pandoc::Modules->new({ 
-    'Pod::Simple::Pandoc' => Pod::Simple::Pandoc->new->parse_file('lib/Pod/Simple/Pandoc.pm') 
+    'Pod::Simple::Pandoc' => $parser->parse_file('lib/Pod/Simple/Pandoc.pm')
 });
 
+# index
 sub is_index {
     my ( $name, $opt, $meta, $url, $title ) = @_;
 
@@ -38,7 +60,5 @@ is_index(
     'Pod-Simple-Pandoc', 'wikilink'
 );
 
-$modules = Pod::Simple::Pandoc->parse_modules('t/examples');
-is $modules->{Empty}->metavalue('title'), 'Empty', 'title without NAME';
 
 done_testing;
