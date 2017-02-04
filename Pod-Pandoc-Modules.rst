@@ -28,20 +28,18 @@ generators such as Jekyll).
 See \ `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  for how to create
 instances of this module.
 
-EXAMPLES
-========
-
-Create GitHub Wiki pages:
-
-::
-
-        $modules->serialize(
-            { dir => 'wiki', ext => 'md', index => 'Home', wiki => 1 },
-            ...
-        );
-
 METHODS
 =======
+
+add( $name => $doc )
+--------------------
+
+Add a module given as
+\ `Pandoc::Document <https://metacpan.org/pod/Pandoc::Document>`__\ 
+unless a module of same \ ``$name``\  already exists. As an exception a
+parsed \ `.pod <https://metacpan.org/pod/.pod>`__\  file will override a
+parsed \ `.pm <https://metacpan.org/pod/.pm>`__\  file. The document
+title is set to the module name if missing.
 
 serialize ( [ $dir ] [, \\%options ] [, @args ] )
 -------------------------------------------------
