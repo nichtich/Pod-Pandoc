@@ -21,7 +21,7 @@ our @EXPORT_OK = qw(pod2pandoc parse_arguments);
 sub parse_arguments {
     my %opt;
     Getopt::Long::GetOptionsFromArray(
-        \@_,              \%opt,    'help|h|?', 'data-sections',
+        \@_,              \%opt,    'help|h|?', 'parse=s',
         'podurl=s',       'ext=s',  'index=s',  'wiki',
         'default-meta=s', 'update', 'quiet'
     ) or exit 1;
@@ -37,6 +37,10 @@ sub parse_arguments {
     }
     else {
         push( @input, shift @_ ) while @_ and $_[0] !~ /^-./;
+    }
+
+    if ( $opt{parse} and $opt{parse} ne '*' ) {
+        $opt{parse} = [ split /[, ]+/, $opt{parse} ];
     }
 
     return ( \@input, \%opt, @_ );

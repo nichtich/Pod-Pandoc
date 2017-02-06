@@ -19,10 +19,9 @@ use utf8;
 sub new {
     my ( $class, %opt ) = @_;
 
-    $opt{targets} //= [];
-    if ( $opt{'data-sections'} ) {
-        Pandoc->require('1.12');
-        push @{ $opt{targets} }, pandoc->input_formats;
+    $opt{parse} ||= [];
+    if ( $opt{parse} eq '*' ) {
+        $opt{parse} = [ pandoc->require('1.12')->input_formats ];
     }
 
     $opt{podurl} //= 'https://metacpan.org/pod/';
@@ -39,7 +38,7 @@ sub _parser {
     $parser->merge_text(1);          # emit text nodes combined
     $parser->no_errata_section(1);   # omit errata section
     $parser->complain_stderr(1);     # TODO: configure
-    $parser->accept_targets('*');    # include all data sections
+    $parser->accept_target('*');     # include all data sections
 
     # remove shortest leading whitespace string from verbatim sections
     $parser->strip_verbatim_indent(
@@ -346,7 +345,7 @@ sub _pod_data {
 
     # parse and insert known formats if requested
     my $format = $target eq 'tex' ? 'latex' : $target;
-    if ( grep { $format eq $_ } @{ $self->{targets} } ) {
+    if ( grep { $format eq $_ } @{ $self->{parse} } ) {
         utf8::decode($content);
         my $doc = pandoc->parse( $format => $content, '--smart' );
         return @{ $doc->content };
@@ -412,7 +411,7 @@ Pod::Simple::Pandoc - convert Pod to Pandoc document model
 
   use Pod::Simple::Pandoc;
 
-  my $parser = Pod::Simple::Pandoc->new;
+  my $parser = Pod::Simple::Pandoc->new( %options );
   my $doc    = $parser->parse_file( $filename );
 
   # result is a Pandoc::Document object
@@ -422,25 +421,24 @@ Pod::Simple::Pandoc - convert Pod to Pandoc document model
 
 =head1 DESCRIPTION
 
-This module converts Pod format documentation (L<perlpod>) to the document
-model used by L<Pandoc|http://pandoc.org/>. The result object can be accessed
-with methods of L<Pandoc::Elements> and emitted as JSON for further processing
-to other document formats (HTML, Markdown, LaTeX, PDF, EPUB, docx, ODT,
-man...).
+This module converts Pod format (L<perlpod>) to the document model used by
+L<Pandoc|http://pandoc.org/>. The result can be accessed with methods of
+L<Pandoc::Elements> and further processed with Pandoc to convert it to other
+document formats (HTML, Markdown, LaTeX, PDF, EPUB, docx, ODT, man...).
 
-The command line script L<pod2pandoc> makes use of this module, for instance to
-directly convert to PDF:
-
-  pod2pandoc input.pod -o output.pdf
+See L<pod2pandoc> and L<App::pod2pandoc> for a command line script and a
+simplified API to this module.
 
 =head1 OPTIONS
 
 =over
 
-=item data-sections
+=item parse
 
-Parse L<data sections|/Data sections> of pandoc input formats with L<Pandoc>
-and merge them into the document (instead of passing them as C<RawBlock>).
+Parse Pod L<data sections|/Data sections> with L<Pandoc> and merge them into
+the document instead of passing them as C<RawBlock>. Use C<*> to parse all
+formats supported by pandoc as input format. Expects an array reference
+otherwise.
 
 =item podurl
 
@@ -590,9 +588,8 @@ An C<=over>...C<=back> region containing no C<=item> is mapped to C<BlockQuote>.
 Data sections are passed as C<RawBlock>. C<HTML>, C<LaTeX>, C<TeX>, and C<tex>
 are recognized as alias for C<html> and C<tex>.
 
-With option C<parse-data-sections> targets supported by pandoc as input format
-(C<markdown>, C<markdown_github>, C<rst>...) are parsed with L<Pandoc> and
-merged into the result document.
+Option C<parse> can be used to parse data sections with pandoc executable and
+merge them into the result document.
 
 =begin markdown
 

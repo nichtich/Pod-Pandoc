@@ -55,7 +55,7 @@ L<App::pod2pandoc> provides functionality of L<pod2pandoc> to be used in Perl co
 
 =item
 
-L<Pod::Simple::Pandoc> can parse Pod to the abstract document model of Pandoc
+L<Pod::Simple::Pandoc> converts Pod to the abstract document model of Pandoc
 
 =item
 
@@ -65,7 +65,7 @@ L<Pod::Pandoc::Modules> manages a set of Pod documents of Perl modules
 
 =head1 REQUIREMENTS
 
-Installation of this module does not require Pandoc but it is required to make
+Installation of this module does not require Pandoc but it is needed to make
 actual use of it. See L<http://pandoc.org/installing.html> for installation.
 
 =head1 EXAMPLES

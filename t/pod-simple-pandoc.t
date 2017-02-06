@@ -78,9 +78,9 @@ POD
     is $urls->[0], 'http://example.org/perlpod', 'podurl';
 }
 
-# data-sections
+# parse data sections
 if ( pandoc and pandoc->version >= '1.12' ) {
-    my %opt = ( 'data-sections' => 1 );
+    my %opt = ( 'parse' => '*' );
 
     my $doc = Pod::Simple::Pandoc->new(%opt)->parse_file($file);
     is_deeply $doc->query( Header => sub { $_->level == 3 ? $_->string : () } ),

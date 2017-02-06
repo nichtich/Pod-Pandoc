@@ -27,8 +27,13 @@ Pandoc document model for further processing with Pandoc.
 - [pod2pandoc](https://metacpan.org/pod/pod2pandoc) is a command line script to convert Pod to any format supported
 by Pandoc
 - [App::pod2pandoc](https://metacpan.org/pod/App::pod2pandoc) provides functionality of [pod2pandoc](https://metacpan.org/pod/pod2pandoc) to be used in Perl code
-- [Pod::Simple::Pandoc](https://metacpan.org/pod/Pod::Simple::Pandoc) can parse Pod to the abstract document model of Pandoc
-- [Pod::Pandoc::Modules](https://metacpan.org/pod/Pod::Pandoc::Modules) holds a set of Pod documents of Perl modules
+- [Pod::Simple::Pandoc](https://metacpan.org/pod/Pod::Simple::Pandoc) converts Pod to the abstract document model of Pandoc
+- [Pod::Pandoc::Modules](https://metacpan.org/pod/Pod::Pandoc::Modules) manages a set of Pod documents of Perl modules
+
+# REQUIREMENTS
+
+Installation of this module does not require Pandoc but it is needed to make
+actual use of it. See [http://pandoc.org/installing.html](http://pandoc.org/installing.html) for installation.
 
 # EXAMPLES
 
@@ -39,7 +44,7 @@ the `master` branch (see script `deploy.sh`).
 
 The [GitHub wiki of this project](https://github.com/nichtich/Pod-Pandoc/wiki)
 is automatically populated with its module documentation.  Wiki pages
-are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following (see script `update-wiki.sh`:
+are created with [pod2pandoc](https://metacpan.org/pod/pod2pandoc) as following (see script `update-wiki.sh`):
 
     pod2pandoc lib/ script/ wiki/ --ext md --index Home --wiki -t markdown_github
 
@@ -54,12 +59,8 @@ wikilinks in rst output format (see script `update-docs.sh`:
     perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
     make -C docs html
 
-The result is published automatically at [http://pod-pandoc.rtfd.io/](http://pod-pandoc.rtfd.io/).
-
-# REQUIREMENTS
-
-Installation of this module does not require Pandoc but it is required to make
-actual use of it. See [http://pandoc.org/installing.html](http://pandoc.org/installing.html) for installation.
+The result is published automatically at
+[http://pod-pandoc.rtfd.io/en/latest/Pod-Pandoc.html](http://pod-pandoc.rtfd.io/en/latest/Pod-Pandoc.html).
 
 # SEE ALSO
 
