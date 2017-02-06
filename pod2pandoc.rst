@@ -63,6 +63,9 @@ OPTIONS
 --update
     Only process when input file is newer then output file
 
+--default-meta FILE
+    Read default metadata from given file.
+
 --quiet
     Don't emit warnings and status information
 

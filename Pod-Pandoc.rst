@@ -42,8 +42,15 @@ OUTLINE
    \ `pod2pandoc <pod2pandoc>`__\  to be used in Perl code
 -  `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  can parse Pod to the
    abstract document model of Pandoc
--  `Pod::Pandoc::Modules <Pod-Pandoc-Modules>`__\  holds a set of Pod
+-  `Pod::Pandoc::Modules <Pod-Pandoc-Modules>`__\  manages a set of Pod
    documents of Perl modules
+
+REQUIREMENTS
+============
+
+Installation of this module does not require Pandoc but it is required
+to make actual use of it. See \ http://pandoc.org/installing.html\  for
+installation.
 
 EXAMPLES
 ========
@@ -58,7 +65,7 @@ The \ `GitHub wiki of this
 project <https://github.com/nichtich/Pod-Pandoc/wiki>`__\  is
 automatically populated with its module documentation. Wiki pages are
 created with \ `pod2pandoc <pod2pandoc>`__\  as following (see script
-\ ``update-wiki.sh``:
+\ ``update-wiki.sh``):
 
 ::
 
@@ -79,14 +86,8 @@ script \ ``update-docs.sh``:
       perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
       make -C docs html
 
-The result is published automatically at \ http://pod-pandoc.rtfd.io/.
-
-REQUIREMENTS
-============
-
-Installation of this module does not require Pandoc but it is required
-to make actual use of it. See \ http://pandoc.org/installing.html\  for
-installation.
+The result is published automatically at
+\ http://pod-pandoc.rtfd.io/en/latest/Pod-Pandoc.html.
 
 SEE ALSO
 ========

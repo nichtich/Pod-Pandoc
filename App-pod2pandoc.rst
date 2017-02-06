@@ -39,10 +39,10 @@ FUNCTIONS
 pod2pandoc( \\@input, [ \\%options, ] \\@arguments )
 ----------------------------------------------------
 
-Processed input files with given options (``data-sections``,
-\ ``podurl``, \ ``ext``, \ ``wiki``, \ ``update``, and \ ``quiet``, see
-script \ `pod2pandoc <pod2pandoc>`__\  for documentation) . Additional
-arguments are passed to \ ``pandoc``\  executable via module
+Processed input files with given \ `pod2pandoc <pod2pandoc>`__\  options
+(``data-sections``, \ ``podurl``, \ ``ext``, \ ``wiki``, \ ``meta``,
+\ ``update``, and \ ``quiet``) . Additional arguments are passed to
+\ ``pandoc``\  executable via module
 \ `Pandoc <https://metacpan.org/pod/Pandoc>`__.
 
 Input can be either files and/or module names or directories to
