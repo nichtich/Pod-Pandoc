@@ -105,27 +105,35 @@ sub parse_tree {
 sub parse_and_merge {
     my ( $self, @input ) = @_;
 
-    my $doc;
+    my @docs = map {
+        ( $_ eq '-' or -e $_ )
+          ? $self->parse_file($_)
+          : $self->parse_module($_)
+    } @input;
 
-    foreach my $file (@input) {
+    my $doc = shift @docs;
 
-        my $cur =
-          ( $file ne '-' and not -e $file )
-          ? $self->parse_module($file)
-          : $self->parse_file($file);
-
-        if ($doc) {
-            push @{ $doc->content }, @{ $cur->content };
+    if (@docs) {
+        my $content = [];
+        foreach my $cur ( $doc, @docs ) {
+            $cur->transform(
+                Header => sub {
+                    $_->id('');    # FIXME: this breaks all internal links
+                    Header $_->level + 1, $_->attr, $_->content;
+                }
+            );
+            my $title = $cur->metavalue('title')
+              // $cur->metavalue('file');    # required?
+            push @$content,
+              Header( 1, attributes {}, [ Str $title] ),
+              @{ $cur->content };
         }
-        else {
-            $doc = $cur;
-        }
-    }
-
-    return unless $doc;
-
-    if ( @input > 1 ) {
+        $doc->content($content);
         $doc->meta->{file} = MetaList [ map { MetaString $_ } @input ];
+
+        # add new internal ids
+        require Pandoc::Filter::HeaderIdentifiers;
+        Pandoc::Filter::HeaderIdentifiers->new->apply($doc);
     }
 
     return $doc;
