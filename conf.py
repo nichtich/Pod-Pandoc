@@ -29,14 +29,15 @@ master_doc = meta['name']
 project = meta['name']
 
 # TODO get actual date and copyright holder?
-copyright = '%s, %s' % (datetime.datetime.now().year, meta['author'])
-
-author = meta['author']
+author = meta['author'][0]
+copyright = '%s, %s' % (datetime.datetime.now().year, author)
 
 # The short X.Y version.
 version = meta['version']
 # The full version, including alpha/beta/rc tags.
 release = meta['version']
+
+# TODO: get link to github and issues via meta
 
 language = None
 
