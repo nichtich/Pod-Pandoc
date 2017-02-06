@@ -33,8 +33,8 @@ with methods of
 further processed with Pandoc to convert it to other document formats
 (HTML, Markdown, LaTeX, PDF, EPUB, docx, ODT, man…).
 
-See \ `pod2pandoc <pod2pandoc>`__\  and
-\ `App::pod2pandoc <App-pod2pandoc>`__\  for a command line script and a
+See \ :doc:`pod2pandoc <pod2pandoc>`\  and
+\ :doc:`App::pod2pandoc <App-pod2pandoc>`\  for a command line script and a
 simplified API to this module.
 
 OPTIONS
@@ -131,7 +131,7 @@ Some examples of links of different kinds:
 
 http://example.org/
 
-`pod2pandoc <pod2pandoc>`__
+:doc:`pod2pandoc <pod2pandoc>`
 
 `pod2pandoc <pod2pandoc#OPTIONS>`__
 
@@ -143,7 +143,7 @@ http://example.org/
 
 Link text can contain formatting codes:
 
-`pod2pandoc <pod2pandoc>`__
+:doc:`pod2pandoc <pod2pandoc>`
 
 Internal links are not supported yet:
 

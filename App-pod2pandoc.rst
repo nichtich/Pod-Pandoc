@@ -31,7 +31,7 @@ DESCRIPTION
 ===========
 
 This module implements the command line script
-\ `pod2pandoc <pod2pandoc>`__.
+\ :doc:`pod2pandoc <pod2pandoc>`.
 
 FUNCTIONS
 =========
@@ -39,7 +39,7 @@ FUNCTIONS
 pod2pandoc( \\@input, [ \\%options, ] \\@arguments )
 ----------------------------------------------------
 
-Processed input files with given \ `pod2pandoc <pod2pandoc>`__\  options
+Processed input files with given \ :doc:`pod2pandoc <pod2pandoc>`\  options
 (``data-sections``, \ ``podurl``, \ ``ext``, \ ``wiki``, \ ``meta``,
 \ ``update``, and \ ``quiet``) . Additional arguments are passed to
 \ ``pandoc``\  executable via module
@@ -62,8 +62,8 @@ May terminate the program with message, for instance with argument
 SEE ALSO
 ========
 
-This module is part of \ `Pod::Pandoc <Pod-Pandoc>`__\  and based on the
-modules \ `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__,
-\ `Pod::Pandoc::Modules <Pod-Pandoc-Modules>`__,
+This module is part of \ :doc:`Pod::Pandoc <Pod-Pandoc>`\  and based on the
+modules \ :doc:`Pod::Simple::Pandoc <Pod-Simple-Pandoc>`,
+\ :doc:`Pod::Pandoc::Modules <Pod-Pandoc-Modules>`,
 \ `Pandoc::Element <https://metacpan.org/pod/Pandoc::Element>`__\  and
 \ `Pandoc <https://metacpan.org/pod/Pandoc>`__.

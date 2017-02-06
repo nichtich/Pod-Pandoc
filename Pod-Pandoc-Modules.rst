@@ -25,7 +25,7 @@ configured via templates, document rewriting etc. and used with many
 output formats (html, markdown, and rst to be embedded in static site
 generators such as Jekyll).
 
-See \ `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  for how to create
+See \ :doc:`Pod::Simple::Pandoc <Pod-Simple-Pandoc>`\  for how to create
 instances of this module.
 
 METHODS
@@ -37,9 +37,9 @@ add( $name => $doc )
 Add a module given as
 \ `Pandoc::Document <https://metacpan.org/pod/Pandoc::Document>`__\ 
 unless a module of same \ ``$name``\  already exists. As an exception a
-parsed \ `.pod <https://metacpan.org/pod/.pod>`__\  file will override a
-parsed \ `.pm <https://metacpan.org/pod/.pm>`__\  file. The document
-title is set to the module name if missing.
+parsed \ `.pod <https://metacpan.org/pod/.pod>`__\  file will override
+existing entries. The document title is set to the module name if
+missing.
 
 serialize ( [ $dir ] [, \\%options ] [, @args ] )
 -------------------------------------------------
@@ -78,4 +78,4 @@ Create and return an index document as
 SEE ALSO
 ========
 
-This module is part of \ `Pod::Pandoc <Pod-Pandoc>`__.
+This module is part of \ :doc:`Pod::Pandoc <Pod-Pandoc>`.

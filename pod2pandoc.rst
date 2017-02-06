@@ -59,7 +59,7 @@ OPTIONS
     Index file name when processing a directory. Disable with \ ``0``
 
 --wiki
-    Create wikilinks and flat files when processing a directory
+    Create wikilinks when processing a directory
 
 --update
     Only process when input file is newer then output file
@@ -76,8 +76,8 @@ OPTIONS
 SEE ALSO
 ========
 
-This script is part of \ `Pod::Pandoc <Pod-Pandoc>`__\  and implemented
-in \ `App::pod2pandoc <App-pod2pandoc>`__. Together with Pandoc document
+This script is part of \ :doc:`Pod::Pandoc <Pod-Pandoc>`\  and implemented
+in \ :doc:`App::pod2pandoc <App-pod2pandoc>`. Together with Pandoc document
 converter it can be used as customizable replacement for specialized Pod
 converter scripts such as
 \ `pod2html <https://metacpan.org/pod/pod2html>`__,

@@ -36,13 +36,13 @@ processing with Pandoc.
 OUTLINE
 =======
 
--  `pod2pandoc <pod2pandoc>`__\  is a command line script to convert Pod
+-  :doc:`pod2pandoc <pod2pandoc>`\  is a command line script to convert Pod
    to any format supported by Pandoc
--  `App::pod2pandoc <App-pod2pandoc>`__\  provides functionality of
-   \ `pod2pandoc <pod2pandoc>`__\  to be used in Perl code
--  `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  converts Pod to the
+-  :doc:`App::pod2pandoc <App-pod2pandoc>`\  provides functionality of
+   \ :doc:`pod2pandoc <pod2pandoc>`\  to be used in Perl code
+-  :doc:`Pod::Simple::Pandoc <Pod-Simple-Pandoc>`\  converts Pod to the
    abstract document model of Pandoc
--  `Pod::Pandoc::Modules <Pod-Pandoc-Modules>`__\  manages a set of Pod
+-  :doc:`Pod::Pandoc::Modules <Pod-Pandoc-Modules>`\  manages a set of Pod
    documents of Perl modules
 
 REQUIREMENTS
@@ -64,7 +64,7 @@ GitHub wiki
 The \ `GitHub wiki of this
 project <https://github.com/nichtich/Pod-Pandoc/wiki>`__\  is
 automatically populated with its module documentation. Wiki pages are
-created with \ `pod2pandoc <pod2pandoc>`__\  as following (see script
+created with \ :doc:`pod2pandoc <pod2pandoc>`\  as following (see script
 \ ``update-wiki.sh``):
 
 ::
@@ -82,8 +82,8 @@ script \ ``update-docs.sh``:
 
 ::
 
-      pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
-      perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
+      pod2pandoc lib/ script/ docs/ --ext rst --wiki -t rst --standalone
+      perl -pi -e 's!`([^`]+) <([^>]+)>`__!-e "docs/$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"!e' docs/*.rst
       make -C docs html
 
 The result is published automatically at
