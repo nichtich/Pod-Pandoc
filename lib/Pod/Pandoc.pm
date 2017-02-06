@@ -88,8 +88,8 @@ documents in reStructureText format. It further requires a configuration file
 C<conf.py> and some links need to be adjusted because Pandoc does not support
 wikilinks in rst output format (see script C<update-docs.sh>:
 
-  pod2pandoc lib/ script/ docs/ --index 0 --ext rst --wiki -t rst --standalone
-  perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
+  pod2pandoc lib/ script/ docs/ --ext rst --wiki -t rst --standalone
+  perl -pi -e 's!`([^`]+) <([^>]+)>`__!-e "docs/$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"!e' docs/*.rst
   make -C docs html
 
 The result is published automatically at
