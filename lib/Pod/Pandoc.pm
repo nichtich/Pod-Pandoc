@@ -59,9 +59,14 @@ L<Pod::Simple::Pandoc> can parse Pod to the abstract document model of Pandoc
 
 =item
 
-L<Pod::Pandoc::Modules> holds a set of Pod documents of Perl modules
+L<Pod::Pandoc::Modules> manages a set of Pod documents of Perl modules
 
 =back
+
+=head1 REQUIREMENTS
+
+Installation of this module does not require Pandoc but it is required to make
+actual use of it. See L<http://pandoc.org/installing.html> for installation.
 
 =head1 EXAMPLES
 
@@ -72,7 +77,7 @@ the C<master> branch (see script C<deploy.sh>).
 
 The L<GitHub wiki of this project|https://github.com/nichtich/Pod-Pandoc/wiki>
 is automatically populated with its module documentation.  Wiki pages
-are created with L<pod2pandoc> as following (see script C<update-wiki.sh>:
+are created with L<pod2pandoc> as following (see script C<update-wiki.sh>):
 
   pod2pandoc lib/ script/ wiki/ --ext md --index Home --wiki -t markdown_github
 
@@ -87,12 +92,8 @@ wikilinks in rst output format (see script C<update-docs.sh>:
   perl -pi -e 's/`([^`]+) <([^>]+)>`__/-e "$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"/e' docs/*.rst
   make -C docs html
 
-The result is published automatically at L<http://pod-pandoc.rtfd.io/>.
-
-=head1 REQUIREMENTS
-
-Installation of this module does not require Pandoc but it is required to make
-actual use of it. See L<http://pandoc.org/installing.html> for installation.
+The result is published automatically at
+L<http://pod-pandoc.rtfd.io/en/latest/Pod-Pandoc.html>.
 
 =head1 SEE ALSO
 

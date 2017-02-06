@@ -10,7 +10,9 @@ use Pod::Usage;
 use Pod::Simple::Pandoc;
 use Pandoc;
 use Pandoc::Elements;
-use List::Util qw(all);
+use Scalar::Util qw(reftype blessed);
+use JSON;
+use Carp;
 
 use parent 'Exporter';
 our @EXPORT    = qw(pod2pandoc);
@@ -19,9 +21,9 @@ our @EXPORT_OK = qw(pod2pandoc parse_arguments);
 sub parse_arguments {
     my %opt;
     Getopt::Long::GetOptionsFromArray(
-        \@_,        \%opt,   'help|h|?', 'data-sections',
-        'podurl=s', 'ext=s', 'index=s',  'wiki',
-        'update',   'quiet'
+        \@_,              \%opt,    'help|h|?', 'data-sections',
+        'podurl=s',       'ext=s',  'index=s',  'wiki',
+        'default-meta=s', 'update', 'quiet'
     ) or exit 1;
     pod2usage(1) if delete $opt{help};
 
@@ -40,10 +42,67 @@ sub parse_arguments {
     return ( \@input, \%opt, @_ );
 }
 
+# TODO: move to Pandoc::Elements
+sub _add_default_meta {
+    my ( $doc, $meta ) = @_;
+    return unless $meta;
+    $doc->meta->{$_} //= $meta->{$_} for keys %$meta;
+}
+
+sub _plain2meta {
+    my $value = shift;
+    if ( !ref $value ) {
+        MetaString $value;
+    }
+    elsif ( JSON::is_bool($value) ) {
+        MetaBool $value;
+    }
+    elsif ( blessed($value) ) {
+        if ( $value->can('is_meta') and $value->is_meta ) {
+            $value;
+        }
+        else {
+            MetaString "$value";
+        }
+    }
+    elsif ( reftype $value eq 'ARRAY' ) {
+        MetaList [ map { _plain2meta($_) } @$value ];
+    }
+    else {
+        MetaMap {
+            map { $_ => _plain2meta( $value->{$_} ) } keys %$value
+        }
+    }
+}
+
+sub _default_meta {
+    my $meta = shift || {};
+    return $meta if ref $meta;
+
+    # read default metadata from file
+    if ( $meta =~ /\.json$/ ) {
+        open( my $fh, "<:encoding(UTF-8)", $meta )
+          or croak "failed to open $meta";
+        local $/;
+        $meta = decode_json(<$fh>);
+        for ( keys %$meta ) {
+            $meta->{$_} = _plain2meta( $meta->{$_} );
+        }
+        return $meta;
+    }
+    else {
+        pandoc->require('1.12.1');
+        return pandoc->file($meta)->meta;
+    }
+}
+
 sub pod2pandoc {
     my $input = shift;
     my $opt   = ref $_[0] ? shift : {};
     my @args  = @_;
+
+    $opt->{meta} =
+      _default_meta( $opt->{meta} // delete $opt->{'default-meta'} );
 
     # directories
     if ( @$input > 0 and -d $input->[0] ) {
@@ -56,6 +115,9 @@ sub pod2pandoc {
               unless %$found or $opt->{quiet};
             $modules->add( $_ => $found->{$_} ) for keys %$found;
         }
+
+        _add_default_meta( $modules->{$_}, $opt->{meta} ) for %$modules;
+
         $modules->serialize( $target, $opt, @args );
     }
 
@@ -63,6 +125,8 @@ sub pod2pandoc {
     else {
         my $parser = Pod::Simple::Pandoc->new(%$opt);
         my $doc = $parser->parse_and_merge( @$input ? @$input : '-' );
+
+        _add_default_meta( $doc, $opt->{meta} );
 
         if (@args) {
             pandoc->require('1.12.1');
@@ -107,9 +171,9 @@ This module implements the command line script L<pod2pandoc>.
 
 =head2 pod2pandoc( \@input, [ \%options, ] \@arguments )
 
-Processed input files with given options (C<data-sections>, C<podurl>, C<ext>,
-C<wiki>, C<update>, and C<quiet>, see script L<pod2pandoc> for documentation) .
-Additional arguments are passed to C<pandoc> executable via module L<Pandoc>.
+Processed input files with given L<pod2pandoc> options (C<data-sections>,
+C<podurl>, C<ext>, C<wiki>, C<meta>, C<update>, and C<quiet>) .  Additional
+arguments are passed to C<pandoc> executable via module L<Pandoc>.
 
 Input can be either files and/or module names or directories to recursively
 search for C<.pm> and C<.pod> files. If no input is specified, Pod is read from

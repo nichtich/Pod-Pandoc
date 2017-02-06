@@ -125,7 +125,9 @@ sub parse_and_merge {
 
     return unless $doc;
 
-    $doc->meta->{file} = MetaList [ map { MetaString $_ } @input ];
+    if ( @input > 1 ) {
+        $doc->meta->{file} = MetaList [ map { MetaString $_ } @input ];
+    }
 
     return $doc;
 }
@@ -484,7 +486,6 @@ warnings for skipped files.
 
 Reads Pod from files or modules given by name and merges them into one 
 L<Pandoc::Document> by concatenation.
-
 
 =head1 MAPPING
 

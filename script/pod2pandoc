@@ -68,6 +68,10 @@ Create wikilinks and flat files when processing a directory
 
 Only process when input file is newer then output file
 
+=item --default-meta FILE
+
+Read default metadata from given file.
+
 =item --quiet
 
 Don't emit warnings and status information
