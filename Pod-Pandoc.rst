@@ -40,7 +40,7 @@ OUTLINE
    to any format supported by Pandoc
 -  `App::pod2pandoc <App-pod2pandoc>`__\  provides functionality of
    \ `pod2pandoc <pod2pandoc>`__\  to be used in Perl code
--  `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  can parse Pod to the
+-  `Pod::Simple::Pandoc <Pod-Simple-Pandoc>`__\  converts Pod to the
    abstract document model of Pandoc
 -  `Pod::Pandoc::Modules <Pod-Pandoc-Modules>`__\  manages a set of Pod
    documents of Perl modules
@@ -48,8 +48,8 @@ OUTLINE
 REQUIREMENTS
 ============
 
-Installation of this module does not require Pandoc but it is required
-to make actual use of it. See \ http://pandoc.org/installing.html\  for
+Installation of this module does not require Pandoc but it is needed to
+make actual use of it. See \ http://pandoc.org/installing.html\  for
 installation.
 
 EXAMPLES

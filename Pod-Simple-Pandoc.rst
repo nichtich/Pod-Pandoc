@@ -14,7 +14,7 @@ SYNOPSIS
 
       use Pod::Simple::Pandoc;
 
-      my $parser = Pod::Simple::Pandoc->new;
+      my $parser = Pod::Simple::Pandoc->new( %options );
       my $doc    = $parser->parse_file( $filename );
 
       # result is a Pandoc::Document object
@@ -25,28 +25,27 @@ SYNOPSIS
 DESCRIPTION
 ===========
 
-This module converts Pod format documentation
+This module converts Pod format
 (`perlpod <https://metacpan.org/pod/perlpod>`__) to the document model
-used by \ `Pandoc <http://pandoc.org/>`__. The result object can be
-accessed with methods of
+used by \ `Pandoc <http://pandoc.org/>`__. The result can be accessed
+with methods of
 \ `Pandoc::Elements <https://metacpan.org/pod/Pandoc::Elements>`__\  and
-emitted as JSON for further processing to other document formats (HTML,
-Markdown, LaTeX, PDF, EPUB, docx, ODT, man…).
+further processed with Pandoc to convert it to other document formats
+(HTML, Markdown, LaTeX, PDF, EPUB, docx, ODT, man…).
 
-The command line script \ `pod2pandoc <pod2pandoc>`__\  makes use of
-this module, for instance to directly convert to PDF:
-
-::
-
-      pod2pandoc input.pod -o output.pdf
+See \ `pod2pandoc <pod2pandoc>`__\  and
+\ `App::pod2pandoc <App-pod2pandoc>`__\  for a command line script and a
+simplified API to this module.
 
 OPTIONS
 =======
 
-data-sections
-    Parse \ `data sections <#data-sections>`__\  of pandoc input formats
-    with \ `Pandoc <https://metacpan.org/pod/Pandoc>`__\  and merge them
-    into the document (instead of passing them as \ ``RawBlock``).
+parse
+    Parse Pod \ `data sections <#data-sections>`__\  with
+    \ `Pandoc <https://metacpan.org/pod/Pandoc>`__\  and merge them into
+    the document instead of passing them as \ ``RawBlock``. Use
+    \ ``*``\  to parse all formats supported by pandoc as input format.
+    Expects an array reference otherwise.
 
 podurl
     Base URL to link Perl module names to. Set to
@@ -192,10 +191,8 @@ Data sections are passed as \ ``RawBlock``. \ ``HTML``, \ ``LaTeX``,
 \ ``TeX``, and \ ``tex``\  are recognized as alias for \ ``html``\  and
 \ ``tex``.
 
-With option \ ``parse-data-sections``\  targets supported by pandoc as
-input format (``markdown``, \ ``markdown_github``, \ ``rst``\ …) are
-parsed with \ `Pandoc <https://metacpan.org/pod/Pandoc>`__\  and merged
-into the result document.
+Option \ ``parse``\  can be used to parse data sections with pandoc
+executable and merge them into the result document.
 
 .. raw:: markdown
 
