@@ -21,9 +21,7 @@ sub add {
     my ( $self, $name, $doc ) = @_;
 
     if ( my $given = $self->{$name} ) {
-        return    # override .pm with .pod, otherwise skip
-          if $given->metavalue('file') !~ /\.pm/
-          or $doc->metavalue('file') !~ /\.pod/;
+        return if $doc->metavalue('file') !~ /\.pod/;
     }
     $doc->meta->{title} //= MetaString $name;
 
@@ -166,8 +164,8 @@ See L<Pod::Simple::Pandoc> for how to create instances of this module.
 =head2 add( $name => $doc )
 
 Add a module given as L<Pandoc::Document> unless a module of same C<$name>
-already exists. As an exception a parsed L<.pod> file will override a parsed
-L<.pm> file. The document title is set to the module name if missing.
+already exists. As an exception a parsed L<.pod> file will override existing
+entries. The document title is set to the module name if missing.
 
 =head2 serialize ( [ $dir ] [, \%options ] [, @args ] )
 

@@ -170,15 +170,19 @@ sub parse_modules {
     my $modules = Pod::Pandoc::Modules->new;
     return $modules unless -d $dir;
 
-    foreach my $doc ( values %{ $parser->parse_dir($dir) } ) {
-        my $file = $doc->metavalue('file');
+    my $files = $parser->parse_dir($dir);
+    foreach my $file ( sort keys %$files ) {
+        my $doc = $files->{$file};
         my $module = File::Spec->abs2rel( $file, $dir );
         $module =~ s{\.(pm|pod)$}{}g;
         $module =~ s{/}{::}g;
         if ( ( $doc->metavalue('title') // $module ) eq $module ) {
-            if ( not $modules->add( $module => $doc ) and $opt{quiet} ) {
-                warn "$file skipped for "
-                  . $modules->{$module}->metavalue('file');
+            my $old = $modules->{$module};
+            my $skipped = $modules->add( $module => $doc ) ? $old : $doc;
+            if ( $skipped and not $opt{quiet} ) {
+                warn $skipped->metavalue('file')
+                  . " skipped for "
+                  . $modules->{$module}->metavalue('file') . "\n";
             }
         }
         else {
