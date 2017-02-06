@@ -51,7 +51,7 @@ sub is_index {
 is_index(
     'index (default)',
     {}, {},
-    'Pod/Simple/Pandoc.html', 'Pod::Simple::Pandoc'
+    'Pod-Simple-Pandoc.html', 'Pod::Simple::Pandoc'
 );
 
 is_index(

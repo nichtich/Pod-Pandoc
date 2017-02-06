@@ -30,17 +30,21 @@ sub add {
 
 sub module_link {
     my ( $module, $opt ) = @_;
-    if ( $opt->{wiki} ) {
-        my $target = $module;
+
+    my $target = $module;
+    if ( $opt->{subdirectories} ) {    # TODO: document and test
+        $target =~ s{::}{/}g;
+    }
+    else {
         $target =~ s{::}{-}g;
+    }
+
+    if ( $opt->{wiki} ) {
         return Link attributes {}, [ Str $module ], [ $target, 'wikilink' ];
     }
     else {
-        my $name = shift;
-        my $file = $name;
-        $file =~ s{::}{/}g;
-        $file .= '.' . ( $opt->{ext} // 'html' );
-        return Link attributes {}, [ Str $name ], [ $file, $name ];
+        $target .= '.' . ( $opt->{ext} // 'html' );
+        return Link attributes {}, [ Str $module ], [ $target, $module ];
     }
 }
 
@@ -92,11 +96,11 @@ sub serialize {
         my $module = $doc->metavalue('title');
 
         my $name = $module;
-        if ( $opt->{wiki} ) {
-            $name =~ s{::}{-}g;
+        if ( $opt->{subdirectories} ) {
+            $name =~ s{::}{/}g;
         }
         else {
-            $name =~ s{::}{/}g;
+            $name =~ s{::}{-}g;
         }
         $name .= '.' . ( $opt->{ext} // 'html' );
         my $target = File::Spec->catfile( $dir, $name );
