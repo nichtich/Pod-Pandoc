@@ -4,16 +4,16 @@ from __future__ import unicode_literals
 import json
 import sphinx_rtd_theme
 import datetime
+import sys, os
 
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
-extensions = []
+sys.path.append(os.path.abspath('.'))
+
+extensions = ['indexredirect']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -122,6 +122,4 @@ texinfo_documents = [
      author, 'PodPandoc', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
 
