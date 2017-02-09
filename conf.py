@@ -13,7 +13,7 @@ import sys, os
 
 sys.path.append(os.path.abspath('.'))
 
-extensions = ['indexredirect']
+extensions = ['pod2readthedocs']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -53,7 +53,7 @@ todo_include_todos = False
 
 # -- Options for HTML output ----------------------------------------------
 
-html_theme = "sphinx_rtd_theme"
+html_theme = 'sphinx_rtd_theme'
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_theme_options = { }
 
@@ -62,20 +62,10 @@ html_theme_options = { }
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
-# -- Options for HTMLHelp output ------------------------------------------
-
-# Output file base name for HTML help builder.
-# TODO: create from meta
-htmlhelp_basename = 'PodPandocdoc'
-
-
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
+    'papersize': 'a4paper',
     
     # The font size ('10pt', '11pt' or '12pt').
     #
@@ -93,33 +83,10 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-# TODO: create from meta
 latex_documents = [
-    (master_doc, 'PodPandoc.tex', u'Pod::Pandoc Documentation',
-     u'Jakob Voß', 'manual'),
+    (master_doc,
+     master_doc+'.tex',
+     '%s Documentation' % project.replace('-','::'),
+     author,
+     'manual'),
 ]
-
-
-# -- Options for manual page output ---------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-# TODO: create from meta
-man_pages = [
-    (master_doc, 'podpandoc', u'Pod::Pandoc Documentation',
-     [author], 1)
-]
-
-
-# -- Options for Texinfo output -------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-# TODO: create from meta
-texinfo_documents = [
-    (master_doc, 'PodPandoc', u'Pod::Pandoc Documentation',
-     author, 'PodPandoc', 'One line description of project.',
-     'Miscellaneous'),
-]
-

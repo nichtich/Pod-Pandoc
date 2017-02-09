@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    sphinx.ext.indexredirect
-    ~~~~~~~~~~~~~~~~~~~~~~~~
+    pod2readthedocs
+    ~~~~~~~~~~~~~~~
 
     To publish HTML docs with a master document (``master_doc``) other than
     ``index`` create an ``index.html`` that redirects to the master document.
