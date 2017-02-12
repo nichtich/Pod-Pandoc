@@ -37,6 +37,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Getopt::Long" : "0",
             "IPC::Run3" : "0",
             "Pandoc" : "v0.6.0",
             "Pandoc::Elements" : "0.29",
@@ -47,6 +48,7 @@
       },
       "test" : {
          "requires" : {
+            "Capture::Tiny" : "0",
             "Test::Exception" : "0",
             "Test::More" : "0.96",
             "Test::Output" : "0"

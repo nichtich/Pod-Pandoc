@@ -1,5 +1,3 @@
-.. _github: https://github.com/nichtich/Pod-Pandoc/blob/master/lib/Pod/Pandoc.pm
-
 ===========
 Pod::Pandoc
 ===========
