@@ -21,11 +21,15 @@ our @EXPORT_OK = qw(pod2pandoc parse_arguments);
 sub parse_arguments {
     my %opt;
     Getopt::Long::GetOptionsFromArray(
-        \@_,              \%opt,    'help|h|?', 'parse=s',
-        'podurl=s',       'ext=s',  'index=s',  'wiki',
-        'default-meta=s', 'update', 'quiet'
+        \@_,       \%opt,            'help|h|?', 'version',
+        'parse=s', 'podurl=s',       'ext=s',    'index=s',
+        'wiki',    'default-meta=s', 'update',   'quiet'
     ) or exit 1;
-    pod2usage(1) if delete $opt{help};
+    pod2usage(1) if $opt{help};
+    if ( $opt{version} ) {
+        say "$0 $VERSION";
+        exit 0;
+    }
 
     my @input = @_ ? () : '-';
 
