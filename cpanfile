@@ -7,7 +7,7 @@ requires 'Getopt::Long';
 
 # additional modules
 requires 'Pandoc', '0.6.0';
-requires 'Pandoc::Elements', '0.29';
+requires 'Pandoc::Elements', '0.33';
 requires 'IPC::Run3'; # already implied by Pandoc
 
 on test => sub {

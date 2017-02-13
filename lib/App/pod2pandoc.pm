@@ -57,32 +57,6 @@ sub _add_default_meta {
     $doc->meta->{$_} //= $meta->{$_} for keys %$meta;
 }
 
-sub _plain2meta {
-    my $value = shift;
-    if ( !ref $value ) {
-        MetaString $value;
-    }
-    elsif ( JSON::is_bool($value) ) {
-        MetaBool $value;
-    }
-    elsif ( blessed($value) ) {
-        if ( $value->can('is_meta') and $value->is_meta ) {
-            $value;
-        }
-        else {
-            MetaString "$value";
-        }
-    }
-    elsif ( reftype $value eq 'ARRAY' ) {
-        MetaList [ map { _plain2meta($_) } @$value ];
-    }
-    else {
-        MetaMap {
-            map { $_ => _plain2meta( $value->{$_} ) } keys %$value
-        }
-    }
-}
-
 sub _default_meta {
     my $meta = shift || {};
     return $meta if ref $meta;
@@ -94,7 +68,7 @@ sub _default_meta {
         local $/;
         $meta = decode_json(<$fh>);
         for ( keys %$meta ) {
-            $meta->{$_} = _plain2meta( $meta->{$_} );
+            $meta->{$_} = metadata( $meta->{$_} );
         }
         return $meta;
     }
