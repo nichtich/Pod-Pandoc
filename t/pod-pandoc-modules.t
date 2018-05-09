@@ -6,7 +6,7 @@ use Pod::Simple::Pandoc;
 use Pod::Pandoc::Modules;
 use Test::Exception;
 
-unless ( pandoc and pandoc->bin ) {
+unless ( eval { pandoc and pandoc->bin } ) {
     plan skip_all => 'pandoc not available';
 }
 
