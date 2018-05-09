@@ -348,10 +348,15 @@ sub _pod_data {
     }
 
     # parse and insert known formats if requested
-    my $format = $target eq 'tex' ? 'latex' : $target;
+    my $format_arg = my $format = $target eq 'tex' ? 'latex' : $target;
+    if (pandoc->version ge 2) {
+        $format_arg .= '+smart';
+    }
     if ( grep { $format eq $_ } @{ $self->{parse} } ) {
         utf8::decode($content);
-        my $doc = pandoc->parse( $format => $content, '--smart' );
+        my $doc = (pandoc->version ge 2)
+            ? pandoc->parse( $format_arg => $content )
+            : pandoc->parse( $format => $content, '--smart' );
         return @{ $doc->content };
     }
 

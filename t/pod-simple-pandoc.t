@@ -87,7 +87,7 @@ if ( pandoc and pandoc->version >= '1.12' ) {
       ['Examples'],
       'data-sections';
 
-    is_deeply [], $doc->query( RawBlock => sub { $_->format } ), 'no RawBlack';
+    is_deeply [], $doc->query( RawBlock => sub { $_->format } ), 'no RawBlock';
 }
 
 done_testing;
