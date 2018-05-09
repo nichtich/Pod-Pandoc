@@ -5,6 +5,10 @@ use Pandoc;
 use Pod::Simple::Pandoc;
 use Test::Exception;
 
+if ( not ref pandoc ) {
+    plan skip_all => 'pandoc not available';
+}
+
 my $parser = Pod::Simple::Pandoc->new();
 my $file   = 'lib/Pod/Simple/Pandoc.pm';
 
