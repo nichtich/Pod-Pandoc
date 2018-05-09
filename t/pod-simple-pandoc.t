@@ -5,6 +5,10 @@ use Pandoc;
 use Pod::Simple::Pandoc;
 use Test::Exception;
 
+unless ( eval { pandoc and pandoc->bin } ) {
+    plan skip_all => 'pandoc not available';
+}
+
 my $parser = Pod::Simple::Pandoc->new();
 my $file   = 'lib/Pod/Simple/Pandoc.pm';
 
@@ -87,7 +91,7 @@ if ( pandoc and pandoc->version >= '1.12' ) {
       ['Examples'],
       'data-sections';
 
-    is_deeply [], $doc->query( RawBlock => sub { $_->format } ), 'no RawBlack';
+    is_deeply [], $doc->query( RawBlock => sub { $_->format } ), 'no RawBlock';
 }
 
 done_testing;
