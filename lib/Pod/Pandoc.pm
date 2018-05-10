@@ -20,7 +20,8 @@ Pod::Pandoc - process Plain Old Documentation format with Pandoc
 
 # STATUS
 
-[![Build Status](https://travis-ci.org/nichtich/Pod-Pandoc.svg)](https://travis-ci.org/nichtich/Pod-Pandoc)
+[![Unix Build Status](https://travis-ci.org/nichtich/Pod-Pandoc.svg)](https://travis-ci.org/nichtich/Pod-Pandoc)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/lfskwt20v0ofj5ix?svg=true)](https://ci.appveyor.com/project/nichtich/pod-pandoc)
 [![Coverage Status](https://coveralls.io/repos/nichtich/Pod-Pandoc/badge.svg)](https://coveralls.io/r/nichtich/Pod-Pandoc)
 [![Kwalitee Score](http://cpants.cpanauthors.org/dist/Pod-Pandoc.png)](http://cpants.cpanauthors.org/dist/Pod-Pandoc)
 [![Code Climate Issue Count](https://codeclimate.com/github/nichtich/Pod-Pandoc/badges/issue_count.svg)](https://codeclimate.com/github/nichtich/Pod-Pandoc)
@@ -97,7 +98,7 @@ L<http://pod-pandoc.rtfd.io/en/latest/Pod-Pandoc.html>.
 
 =head1 SEE ALSO
 
-This module is basde on the wrapper module L<Pandoc> to execute pandoc from Perl
+This module is based on the wrapper module L<Pandoc> to execute pandoc from Perl
 and on the module L<Pandoc::Elements> for pandoc document processing.
 
 This module makes obsolete several specialized C<Pod::Simple::...> modules such
@@ -112,6 +113,10 @@ L<Pod::HtmlTree>.
 =head1 AUTHOR
 
 Jakob Voß E<lt>jakob.voss@gbv.deE<gt>
+
+=head1 CONTRIBUTORS
+
+Benct Philip Jonsson
 
 =head1 COPYRIGHT AND LICENSE
 

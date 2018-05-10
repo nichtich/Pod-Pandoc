@@ -6,6 +6,7 @@ use 5.010;
 our $VERSION = '0.346.0';
 
 use Pod::Simple::SimpleTree;
+use Pod::Perldoc;
 use Pandoc::Elements;
 use Pandoc::Filter::HeaderIdentifiers;
 use Pod::Pandoc::Modules;
@@ -73,12 +74,9 @@ sub parse_file {
 sub parse_module {
     my ( $self, $name ) = @_;
 
-    # map module name to name
-    run3 [ 'perldoc', '-lm', $name ], undef, \$name;
-    croak $? if $?;
-    chomp $name;
+    my ($file) = Pod::Perldoc->new->grand_search_init([$name]);
 
-    $self->parse_file($name);
+    $self->parse_file($file);
 }
 
 sub parse_string {
@@ -134,7 +132,7 @@ sub parse_and_merge {
 sub is_perl_file {
     my $file = shift;
     return 1 if $file =~ /\.(pm|pod)$/;
-    if ( -x $file ) {
+    if ( -f $file ) {
         open( my $fh, '<', $file ) or return;
         return 1 if $fh and ( <$fh> // '' ) =~ /^#!.*perl/;
     }
@@ -467,7 +465,7 @@ C<subtitle>.
 
 =head2 parse_module( $module )
 
-Reads Pod from a module given by name such as C<"Pod::Pandoc">.
+Reads Pod from a module given by name such as C<"Pod::Pandoc"> or by URL.
 
 =head2 parse_string( $string )
 
