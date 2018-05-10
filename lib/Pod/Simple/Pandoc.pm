@@ -74,7 +74,7 @@ sub parse_file {
 sub parse_module {
     my ( $self, $name ) = @_;
 
-    my ($file) = Pod::Perldoc->new->grand_search_init([$name]);
+    my ($file) = Pod::Perldoc->new->grand_search_init( [$name] );
 
     $self->parse_file($file);
 }
@@ -347,14 +347,15 @@ sub _pod_data {
 
     # parse and insert known formats if requested
     my $format_arg = my $format = $target eq 'tex' ? 'latex' : $target;
-    if (pandoc->version ge 2) {
+    if ( pandoc->version ge 2 ) {
         $format_arg .= '+smart';
     }
     if ( grep { $format eq $_ } @{ $self->{parse} } ) {
         utf8::decode($content);
-        my $doc = (pandoc->version ge 2)
-            ? pandoc->parse( $format_arg => $content )
-            : pandoc->parse( $format => $content, '--smart' );
+        my $doc =
+          ( pandoc->version ge 2 )
+          ? pandoc->parse( $format_arg => $content )
+          : pandoc->parse( $format => $content, '--smart' );
         return @{ $doc->content };
     }
 
@@ -489,7 +490,7 @@ warnings for skipped files.
 
 =head2 parse_and_merge( @files_or_modules )
 
-Reads Pod from files or modules given by name and merges them into one 
+Reads Pod from files or modules given by name and merges them into one
 L<Pandoc::Document> by concatenation.
 
 =head1 MAPPING
