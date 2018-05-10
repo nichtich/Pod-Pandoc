@@ -11,7 +11,8 @@ Pod::Pandoc - process Plain Old Documentation format with Pandoc
 
    # STATUS
 
-   [![Build Status](https://travis-ci.org/nichtich/Pod-Pandoc.svg)](https://travis-ci.org/nichtich/Pod-Pandoc)
+   [![Unix Build Status](https://travis-ci.org/nichtich/Pod-Pandoc.svg)](https://travis-ci.org/nichtich/Pod-Pandoc)
+   [![Windows Build status](https://ci.appveyor.com/api/projects/status/lfskwt20v0ofj5ix?svg=true)](https://ci.appveyor.com/project/nichtich/pod-pandoc)
    [![Coverage Status](https://coveralls.io/repos/nichtich/Pod-Pandoc/badge.svg)](https://coveralls.io/r/nichtich/Pod-Pandoc)
    [![Kwalitee Score](http://cpants.cpanauthors.org/dist/Pod-Pandoc.png)](http://cpants.cpanauthors.org/dist/Pod-Pandoc)
    [![Code Climate Issue Count](https://codeclimate.com/github/nichtich/Pod-Pandoc/badges/issue_count.svg)](https://codeclimate.com/github/nichtich/Pod-Pandoc)
@@ -92,7 +93,7 @@ The result is published automatically at
 SEE ALSO
 ========
 
-This module is basde on the wrapper module
+This module is based on the wrapper module
 \ `Pandoc <https://metacpan.org/pod/Pandoc>`__\  to execute pandoc from
 Perl and on the module
 \ `Pandoc::Elements <https://metacpan.org/pod/Pandoc::Elements>`__\  for
@@ -118,6 +119,11 @@ AUTHOR
 ======
 
 Jakob Voß <jakob.voss@gbv.de>
+
+CONTRIBUTORS
+============
+
+Benct Philip Jonsson
 
 COPYRIGHT AND LICENSE
 =====================

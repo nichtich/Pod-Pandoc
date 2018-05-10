@@ -66,7 +66,8 @@ fields \ ``title``\  and \ ``subtitle``.
 parse\_module( $module )
 ------------------------
 
-Reads Pod from a module given by name such as \ ``"Pod::Pandoc"``.
+Reads Pod from a module given by name such as \ ``"Pod::Pandoc"``\  or
+by URL.
 
 parse\_string( $string )
 ------------------------
