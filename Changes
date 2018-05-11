@@ -1,6 +1,8 @@
 Revision history for Pod-Pandoc
 
 {{$NEXT}}
+
+0.5.0  2018-05-11 23:24:05 CEST
     - Remove NAME section by default, include with option --name
     - Allow to disable module linking with --podurl 0
 
