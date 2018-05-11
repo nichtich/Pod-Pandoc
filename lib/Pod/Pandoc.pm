@@ -74,7 +74,7 @@ actual use of it. See L<http://pandoc.org/installing.html> for installation.
 =head2 Replace L<pod2html>
 
   # pod2html --infile=input.pm --css=style.css --title=TITLE > output.html
-  pod2pandoc input.pm -C style.css --toc -M title=TITLE -M subtitle= -o output.html
+  pod2pandoc input.pm --css=style.css --toc --name -o output.html
 
 Pandoc option C<--toc> corresponds to pod2html option C<--index> and is
 disabled by default. pod2pandoc adds title and subtitle from NAME section.

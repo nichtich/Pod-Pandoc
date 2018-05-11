@@ -15,7 +15,7 @@ my $file   = 'lib/Pod/Simple/Pandoc.pm';
     my $doc = $parser->parse_file($file);
 
     is_deeply $doc->query( Header => sub { $_->level == 1 ? $_->string : () } ),
-      [ qw(NAME SYNOPSIS DESCRIPTION OPTIONS METHODS MAPPING), 'SEE ALSO' ],
+      [ qw(SYNOPSIS DESCRIPTION OPTIONS METHODS MAPPING), 'SEE ALSO' ],
       'headers';
 
     is_deeply $doc->metavalue,
@@ -32,6 +32,12 @@ my $file   = 'lib/Pod/Simple/Pandoc.pm';
     foreach ( '', 'Pandoc::Elements' ) {
         dies_ok { $parser->parse_file($_) } 'parse_file not found';
     }
+}
+
+# parse_file with name
+{
+    my $doc = Pod::Simple::Pandoc->new( name => 1 )->parse_file($file);
+    is $doc->content->[0]->string, 'NAME', 'keep NAME section';
 }
 
 # parse module
@@ -60,7 +66,7 @@ if ( $ENV{RELEASE_TESTING} ) {
 {
     my $doc = $parser->parse_string(<<POD);
 =over
- 
+
 I<hello>
 
 =back

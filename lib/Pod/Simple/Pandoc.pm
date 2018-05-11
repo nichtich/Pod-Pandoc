@@ -96,6 +96,32 @@ sub parse_tree {
         $doc->meta->{subtitle} = MetaString($subtitle) if $subtitle;
     }
 
+    # remove header sections (TODO: move into Pandoc::Elements range filter)
+    unless ( ref $_[0] and $_[0]->{name} ) {
+        my $skip;
+        $doc->content(
+            [
+                map {
+                    if ( defined $skip ) {
+                        if ( $_->name eq 'Header' && $_->level <= $skip ) {
+                            $skip = 0;
+                        }
+                        $skip ? () : $_;
+                    }
+                    else {
+                        if ( $_->name eq 'Header' && $_->string eq 'NAME' ) {
+                            $skip = $_->level;
+                            ();
+                        }
+                        else {
+                            $_;
+                        }
+                    }
+                } @{ $doc->content }
+            ]
+        );
+    }
+
     $doc;
 }
 

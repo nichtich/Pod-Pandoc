@@ -23,7 +23,8 @@ sub parse_arguments {
     Getopt::Long::GetOptionsFromArray(
         \@_,       \%opt,            'help|h|?', 'version',
         'parse=s', 'podurl=s',       'ext=s',    'index=s',
-        'wiki',    'default-meta=s', 'update',   'quiet'
+        'wiki',    'default-meta=s', 'update',   'quiet',
+        'name',
     ) or exit 1;
     pod2usage(1) if $opt{help};
     if ( $opt{version} ) {
@@ -133,7 +134,7 @@ App::pod2pandoc - implements pod2pandoc command line script
   use App::pod2pandoc;
 
   # pod2pandoc command line script
-  my ($input, $opt, @args) = parse_arguments(@ARGV); 
+  my ($input, $opt, @args) = parse_arguments(@ARGV);
   pod2pandoc($input, $opt, @args);
 
   # parse a Perl/Pod file and print its JSON serialization
