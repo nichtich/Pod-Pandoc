@@ -313,7 +313,7 @@ sub _pod_link {
         }
     }
     elsif ( $type eq 'pod' ) {
-        if ($to) {
+        if ( $to && $self->{podurl} ) {
             $url = $self->{podurl} . $to;
         }
         if ($section) {
@@ -322,7 +322,13 @@ sub _pod_link {
         }
     }
 
-    return Link attributes {}, [ _pod_content( $self, $link ) ], [ $url, '' ];
+    my $content = [ _pod_content( $self, $link ) ];
+    if ($url) {
+        Link attributes { class => 'perl-module' }, $content, [ $url, '' ];
+    }
+    else {
+        Span attributes { class => 'perl-module' }, $content;
+    }
 }
 
 # map data section
@@ -451,7 +457,9 @@ otherwise.
 =item podurl
 
 Base URL to link Perl module names to. Set to L<https://metacpan.org/pod/> by
-default.
+default. A false value disables linking external modules and wraps module names
+in C<Span> elements instead. All module names are marked up with class
+C<perl-module>.
 
 =back
 
@@ -529,8 +537,6 @@ L<hell itself!|crontab(5)>
 Link text can contain formatting codes:
 
 L<the C<pod2pandoc> script|pod2pandoc>
-
-Internal links are not supported yet:
 
 L</"MAPPING">
 

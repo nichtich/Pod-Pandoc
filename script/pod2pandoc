@@ -50,7 +50,8 @@ Parse and include data sections. Use C<*> for all.
 
 =item --podurl URL
 
-Base URL to Perl modules. Default: C<https://metacpan.org/pod/>
+Base URL to Perl modules. Default: C<https://metacpan.org/pod/>. A false value
+such as C<0> or C<""> will disable linking to external modules.
 
 =item --ext EXT
 

@@ -48,19 +48,19 @@ Pandoc document model for further processing with Pandoc.
 =item
 
 L<pod2pandoc> is a command line script to convert Pod to any format supported
-by Pandoc
+by Pandoc.
 
 =item
 
-L<App::pod2pandoc> provides functionality of L<pod2pandoc> to be used in Perl code
+L<App::pod2pandoc> provides functionality of L<pod2pandoc> to be used in Perl code.
 
 =item
 
-L<Pod::Simple::Pandoc> converts Pod to the abstract document model of Pandoc
+L<Pod::Simple::Pandoc> converts Pod to the abstract document model of Pandoc.
 
 =item
 
-L<Pod::Pandoc::Modules> manages a set of Pod documents of Perl modules
+L<Pod::Pandoc::Modules> manages a set of Pod documents of Perl modules.
 
 =back
 
@@ -69,10 +69,23 @@ L<Pod::Pandoc::Modules> manages a set of Pod documents of Perl modules
 Installation of this module does not require Pandoc but it is needed to make
 actual use of it. See L<http://pandoc.org/installing.html> for installation.
 
-=head1 EXAMPLES
+=head1 USAGE EXAMPLES
 
-GitHub wiki and Sphinx documentation are automatically build on each commit to
-the C<master> branch (see script C<deploy.sh>).
+=head2 Replace L<pod2html>
+
+  # pod2html --infile=input.pm --css=style.css --title=TITLE > output.html
+  pod2pandoc input.pm -C style.css --toc -M title=TITLE -M subtitle= -o output.html
+
+Pandoc option C<--toc> corresponds to pod2html option C<--index> and is
+disabled by default. pod2pandoc adds title and subtitle from NAME section.
+
+=head2 Replace L<pod2markdown>
+
+  # pod2markdown input.pod
+  pod2pandoc input.pod -t markdown
+
+  # pod2markdown input.pod output.md
+  pod2pandoc input.pod -o output.md
 
 =head2 GitHub wiki
 
@@ -131,7 +144,7 @@ GNU General Public License, Version 2
 .. toctree::
    :hidden:
    :glob:
-   
+
    *
 
 =end rst
