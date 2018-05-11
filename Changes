@@ -1,6 +1,8 @@
 Revision history for Pod-Pandoc
 
 {{$NEXT}}
+    - Remove NAME section by default, include with option --name
+    - Allow to disable module linking with --podurl 0
 
 0.4.1  2018-05-10 22:01:34 CEST
     - Fix running on Windows

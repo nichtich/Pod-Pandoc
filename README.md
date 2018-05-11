@@ -26,20 +26,33 @@ Pandoc document model for further processing with Pandoc.
 # OUTLINE
 
 - [pod2pandoc](https://metacpan.org/pod/pod2pandoc) is a command line script to convert Pod to any format supported
-by Pandoc
-- [App::pod2pandoc](https://metacpan.org/pod/App::pod2pandoc) provides functionality of [pod2pandoc](https://metacpan.org/pod/pod2pandoc) to be used in Perl code
-- [Pod::Simple::Pandoc](https://metacpan.org/pod/Pod::Simple::Pandoc) converts Pod to the abstract document model of Pandoc
-- [Pod::Pandoc::Modules](https://metacpan.org/pod/Pod::Pandoc::Modules) manages a set of Pod documents of Perl modules
+by Pandoc.
+- [App::pod2pandoc](https://metacpan.org/pod/App::pod2pandoc) provides functionality of [pod2pandoc](https://metacpan.org/pod/pod2pandoc) to be used in Perl code.
+- [Pod::Simple::Pandoc](https://metacpan.org/pod/Pod::Simple::Pandoc) converts Pod to the abstract document model of Pandoc.
+- [Pod::Pandoc::Modules](https://metacpan.org/pod/Pod::Pandoc::Modules) manages a set of Pod documents of Perl modules.
 
 # REQUIREMENTS
 
 Installation of this module does not require Pandoc but it is needed to make
 actual use of it. See [http://pandoc.org/installing.html](http://pandoc.org/installing.html) for installation.
 
-# EXAMPLES
+# USAGE EXAMPLES
 
-GitHub wiki and Sphinx documentation are automatically build on each commit to
-the `master` branch (see script `deploy.sh`).
+## Replace [pod2html](https://metacpan.org/pod/pod2html)
+
+    # pod2html --infile=input.pm --css=style.css --title=TITLE > output.html
+    pod2pandoc input.pm --css=style.css --toc --name -o output.html
+
+Pandoc option `--toc` corresponds to pod2html option `--index` and is
+disabled by default. pod2pandoc adds title and subtitle from NAME section.
+
+## Replace [pod2markdown](https://metacpan.org/pod/pod2markdown)
+
+    # pod2markdown input.pod
+    pod2pandoc input.pod -t markdown
+
+    # pod2markdown input.pod output.md
+    pod2pandoc input.pod -o output.md
 
 ## GitHub wiki
 

@@ -38,7 +38,6 @@
       "runtime" : {
          "requires" : {
             "Getopt::Long" : "0",
-            "IPC::Run3" : "0",
             "Pandoc" : "v0.6.0",
             "Pandoc::Elements" : "0.33",
             "Pod::Simple" : "3.08",
@@ -67,7 +66,7 @@
          "web" : "https://github.com/nichtich/Pod-Pandoc"
       }
    },
-   "version" : "0.4.1",
+   "version" : "0.5.0",
    "x_contributors" : [
       "Benct Philip Jonsson <bpjonsson@gmail.com>",
       "Jakob Voß <jakob.voss@gbv.de>"
