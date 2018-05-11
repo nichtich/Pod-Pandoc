@@ -13,7 +13,6 @@ use Pod::Pandoc::Modules;
 use Pandoc;
 use File::Find ();
 use File::Spec;
-use IPC::Run3;
 use Carp;
 use utf8;
 
