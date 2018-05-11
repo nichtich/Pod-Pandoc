@@ -2,11 +2,6 @@
 pod2pandoc
 ==========
 
-NAME
-====
-
-pod2pandoc - convert Pod to Pandoc document model
-
 SYNOPSIS
 ========
 
@@ -43,32 +38,38 @@ OPTIONS
 =======
 
 --help\|-h\|-?
-    Print out usage information and exit
+    Print out usage information and exit.
 
 --parse FORMATS
     Parse and include data sections. Use \ ``*``\  for all.
 
 --podurl URL
-    Base URL to Perl modules. Default: \ ``https://metacpan.org/pod/``
+    Base URL to Perl modules. Default: \ ``https://metacpan.org/pod/``.
+    A false value such as \ ``0``\  or \ ``""``\  will disable linking
+    to external modules.
 
 --ext EXT
     Output file extension when processing a directory. Default:
-    \ ``html``
+    \ ``html``.
 
 --index NAME
-    Index file name when processing a directory. Disable with \ ``0``
+    Index file (e.g. \ ``index.html``) name when processing a directory.
+    Can be disabled with \ ``0``.
+
+--name
+    Include \ ``NAME``\  section which is removed by default.
 
 --wiki
-    Create wikilinks when processing a directory
+    Create wikilinks when processing a directory.
 
 --update
-    Only process when input file is newer then output file
+    Only process when input file is newer then output file.
 
 --default-meta FILE
-    Read default metadata from given file
+    Read default metadata from given file.
 
 --quiet
-    Don't emit warnings and status information
+    Don't emit warnings and status information.
 
 …
     Additional options are passed through to pandoc executable.

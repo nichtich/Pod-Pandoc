@@ -2,11 +2,6 @@
 Pod::Simple::Pandoc
 ===================
 
-NAME
-====
-
-Pod::Simple::Pandoc - convert Pod to Pandoc document model
-
 SYNOPSIS
 ========
 
@@ -49,7 +44,10 @@ parse
 
 podurl
     Base URL to link Perl module names to. Set to
-    \ https://metacpan.org/pod/\  by default.
+    \ https://metacpan.org/pod/\  by default. A false value disables
+    linking external modules and wraps module names in \ ``Span``\ 
+    elements instead. All module names are marked up with class
+    \ ``perl-module``.
 
 METHODS
 =======
@@ -145,8 +143,6 @@ http://example.org/
 Link text can contain formatting codes:
 
 :doc:`pod2pandoc <pod2pandoc>`
-
-Internal links are not supported yet:
 
 `"MAPPING" <#mapping>`__
 

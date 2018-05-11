@@ -2,11 +2,6 @@
 Pod::Pandoc::Modules
 ====================
 
-NAME
-====
-
-Pod::Pandoc::Modules - set of parsed documentation of Perl modules
-
 SYNOPSIS
 ========
 

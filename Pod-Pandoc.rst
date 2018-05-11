@@ -2,22 +2,6 @@
 Pod::Pandoc
 ===========
 
-NAME
-====
-
-Pod::Pandoc - process Plain Old Documentation format with Pandoc
-
-.. raw:: markdown
-
-   # STATUS
-
-   [![Unix Build Status](https://travis-ci.org/nichtich/Pod-Pandoc.svg)](https://travis-ci.org/nichtich/Pod-Pandoc)
-   [![Windows Build status](https://ci.appveyor.com/api/projects/status/lfskwt20v0ofj5ix?svg=true)](https://ci.appveyor.com/project/nichtich/pod-pandoc)
-   [![Coverage Status](https://coveralls.io/repos/nichtich/Pod-Pandoc/badge.svg)](https://coveralls.io/r/nichtich/Pod-Pandoc)
-   [![Kwalitee Score](http://cpants.cpanauthors.org/dist/Pod-Pandoc.png)](http://cpants.cpanauthors.org/dist/Pod-Pandoc)
-   [![Code Climate Issue Count](https://codeclimate.com/github/nichtich/Pod-Pandoc/badges/issue_count.svg)](https://codeclimate.com/github/nichtich/Pod-Pandoc)
-   [![Documentation Status](https://readthedocs.org/projects/pod-pandoc/badge/?version=latest)](http://pod-pandoc.readthedocs.io/?badge=latest)
-
 DESCRIPTION
 ===========
 
@@ -38,13 +22,13 @@ OUTLINE
 =======
 
 -  :doc:`pod2pandoc <pod2pandoc>`\  is a command line script to convert Pod
-   to any format supported by Pandoc
+   to any format supported by Pandoc.
 -  :doc:`App::pod2pandoc <App-pod2pandoc>`\  provides functionality of
-   \ :doc:`pod2pandoc <pod2pandoc>`\  to be used in Perl code
+   \ :doc:`pod2pandoc <pod2pandoc>`\  to be used in Perl code.
 -  :doc:`Pod::Simple::Pandoc <Pod-Simple-Pandoc>`\  converts Pod to the
-   abstract document model of Pandoc
+   abstract document model of Pandoc.
 -  :doc:`Pod::Pandoc::Modules <Pod-Pandoc-Modules>`\  manages a set of Pod
-   documents of Perl modules
+   documents of Perl modules.
 
 REQUIREMENTS
 ============
@@ -53,11 +37,31 @@ Installation of this module does not require Pandoc but it is needed to
 make actual use of it. See \ http://pandoc.org/installing.html\  for
 installation.
 
-EXAMPLES
-========
+USAGE EXAMPLES
+==============
 
-GitHub wiki and Sphinx documentation are automatically build on each
-commit to the \ ``master``\  branch (see script \ ``deploy.sh``).
+Replace \ `pod2html <https://metacpan.org/pod/pod2html>`__
+----------------------------------------------------------
+
+::
+
+      # pod2html --infile=input.pm --css=style.css --title=TITLE > output.html
+      pod2pandoc input.pm --css=style.css --toc --name -o output.html
+
+Pandoc option \ ``--toc``\  corresponds to pod2html option
+\ ``--index``\  and is disabled by default. pod2pandoc adds title and
+subtitle from NAME section.
+
+Replace \ `pod2markdown <https://metacpan.org/pod/pod2markdown>`__
+------------------------------------------------------------------
+
+::
+
+      # pod2markdown input.pod
+      pod2pandoc input.pod -t markdown
+
+      # pod2markdown input.pod output.md
+      pod2pandoc input.pod -o output.md
 
 GitHub wiki
 -----------

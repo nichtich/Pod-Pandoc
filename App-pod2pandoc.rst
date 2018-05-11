@@ -2,11 +2,6 @@
 App::pod2pandoc
 ===============
 
-NAME
-====
-
-App::pod2pandoc - implements pod2pandoc command line script
-
 SYNOPSIS
 ========
 
@@ -15,7 +10,7 @@ SYNOPSIS
       use App::pod2pandoc;
 
       # pod2pandoc command line script
-      my ($input, $opt, @args) = parse_arguments(@ARGV); 
+      my ($input, $opt, @args) = parse_arguments(@ARGV);
       pod2pandoc($input, $opt, @args);
 
       # parse a Perl/Pod file and print its JSON serialization
