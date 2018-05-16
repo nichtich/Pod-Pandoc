@@ -348,11 +348,12 @@ sub _pod_link {
     }
 
     my $content = [ _pod_content( $self, $link ) ];
+    my $attr = $to && $type eq 'pod' ? { class => 'perl-module' } : {};
     if ($url) {
-        Link attributes { class => 'perl-module' }, $content, [ $url, '' ];
+        Link attributes $attr, $content, [ $url, '' ];
     }
     else {
-        Span attributes { class => 'perl-module' }, $content;
+        Span attributes $attr, $content;
     }
 }
 
