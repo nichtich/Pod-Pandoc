@@ -88,6 +88,33 @@ Additional options are passed through to pandoc executable.
 
 =back
 
+=head1 EXAMPLES
+
+=head2 Convert to Markdown
+
+pod2pandoc can be used as alternative to L<pod2markdown>:
+
+  # pod2markdown input.pod
+  pod2pandoc input.pod -t markdown
+
+  # pod2markdown input.pod output.md
+  pod2pandoc input.pod -o output.md
+
+=head2 Convert to HTML
+
+  # pod2html --infile=input.pm --css=style.css --title=TITLE > output.html
+  pod2pandoc input.pm --css=style.css --toc --name -o output.html
+
+Pandoc option C<--toc> corresponds to L<pod2html> option C<--index> and is
+disabled by default. pod2pandoc takes title and subtitle from NAME section.
+
+=head2 Transform a directory of modules with custom template
+
+pod2pandoc can transform multiple modules (like L<Pod::Simple::HTMLBatch>) and
+be used with custom templates (like L<Pod::HtmlEasy>):
+
+  pod2pandoc lib html -s --template=GitHub.html5 --toc
+
 =head1 SEE ALSO
 
 This script is part of L<Pod::Pandoc> and implemented in L<App::pod2pandoc>.

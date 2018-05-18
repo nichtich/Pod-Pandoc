@@ -45,7 +45,7 @@ isa_ok $parser->parse_module('Pandoc::Elements'), 'Pandoc::Document';
 
 if ( $ENV{RELEASE_TESTING} ) {
     my $files = $parser->parse_dir('lib');
-    is scalar( keys %$files ), 4, 'parse_dir';
+    is scalar( keys %$files ), 5, 'parse_dir';
     my $doc = $files->{'lib/Pod/Pandoc.pm'};
     isa_ok $doc, 'Pandoc::Document';
     is_deeply $doc->metavalue,

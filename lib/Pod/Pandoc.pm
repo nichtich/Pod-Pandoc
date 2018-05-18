@@ -41,18 +41,9 @@ formats in a more detailled and uniform way than any set of Perl modules will
 ever do. For this reason Pod::Pandoc provides methods to convert Pod to the
 Pandoc document model for further processing with Pandoc.
 
-=head1 OUTLINE
+=head1 MODULES
 
 =over
-
-=item
-
-L<pod2pandoc> is a command line script to convert Pod to any format supported
-by Pandoc.
-
-=item
-
-L<App::pod2pandoc> provides functionality of L<pod2pandoc> to be used in Perl code.
 
 =item
 
@@ -61,6 +52,19 @@ L<Pod::Simple::Pandoc> converts Pod to the abstract document model of Pandoc.
 =item
 
 L<Pod::Pandoc::Modules> manages a set of Pod documents of Perl modules.
+
+=item
+
+L<pod2pandoc> is a command line script to convert Pod to any format supported
+by Pandoc.
+
+=item
+
+L<App::pod2pandoc> implements the functionality of L<pod2pandoc>.
+
+=item
+
+L<Pod::Pandoc::Web> implements a web browsing interface to Perl documentation.
 
 =back
 
@@ -71,23 +75,17 @@ actual use of it. See L<http://pandoc.org/installing.html> for installation.
 
 =head1 USAGE EXAMPLES
 
-=head2 Replace L<pod2html>
+=head2 Alternative to specialized Pod converter scripts
 
-  # pod2html --infile=input.pm --css=style.css --title=TITLE > output.html
-  pod2pandoc input.pm --css=style.css --toc --name -o output.html
+See L<pod2pandoc/EXAMPLES> for usage examples.
 
-Pandoc option C<--toc> corresponds to pod2html option C<--index> and is
-disabled by default. pod2pandoc adds title and subtitle from NAME section.
+=head2 Browse Perl documentation in customized HTML
 
-=head2 Replace L<pod2markdown>
+See L<Pod::Pandoc::Web> for usage such as:
 
-  # pod2markdown input.pod
-  pod2pandoc input.pod -t markdown
+    plackup -r -Ilib -MPod::Pandoc::Web -e web
 
-  # pod2markdown input.pod output.md
-  pod2pandoc input.pod -o output.md
-
-=head2 GitHub wiki
+=head2 Publish to GitHub wiki
 
 The L<GitHub wiki of this project|https://github.com/nichtich/Pod-Pandoc/wiki>
 is automatically populated with its module documentation.  Wiki pages
@@ -95,12 +93,12 @@ are created with L<pod2pandoc> as following (see script C<update-wiki.sh>):
 
   pod2pandoc lib/ script/ wiki/ --ext md --index Home --wiki -t markdown_github
 
-=head2 Sphinx and Read The Docs
+=head2 Publish with Sphinx at Read The Docs
 
 The L<Sphinx documentation generator|https://sphinx-doc.org/> recommends
 documents in reStructureText format. It further requires a configuration file
 C<conf.py> and some links need to be adjusted because Pandoc does not support
-wikilinks in rst output format (see script C<update-docs.sh>:
+wikilinks in rst output format (see script C<build-docs.sh>):
 
   pod2pandoc lib/ script/ docs/ --ext rst --wiki -t rst --standalone
   perl -pi -e 's!`([^`]+) <([^>]+)>`__!-e "docs/$2.rst" ? ":doc:`$1 <$2>`" : "`$1 <$2>`__"!e' docs/*.rst
@@ -115,11 +113,11 @@ This module is based on the wrapper module L<Pandoc> to execute pandoc from Perl
 and on the module L<Pandoc::Elements> for pandoc document processing.
 
 This module makes obsolete several specialized C<Pod::Simple::...> modules such
-as L<Pod::Simple::HTML>, L<Pod::Simple::XHTML>, L<Pod::Simple::LaTeX>,
-L<Pod::Simple::RTF> L<Pod::Simple::Text>, L<Pod::Simple::Wiki>, L<Pod::WordML>,
-L<Pod::Perldoc::ToToc> etc. It also covers batch conversion such as
-L<Pod::Simple::HTMLBatch>, L<Pod::ProjectDocs>, L<Pod::POM::Web>, and
-L<Pod::HtmlTree>.
+as L<Pod::Simple::HTML>, L<Pod::Simple::XHTML>, L<Pod::HtmlEasy>,
+L<Pod::Simple::LaTeX>, L<Pod::Simple::RTF> L<Pod::Simple::Text>,
+L<Pod::Simple::Wiki>, L<Pod::WordML>, L<Pod::Perldoc::ToToc> etc. It also
+covers batch conversion such as L<Pod::Simple::HTMLBatch>, L<Pod::Site>,
+L<Pod::ProjectDocs>, L<Pod::POM::Web>, and L<Pod::HtmlTree>.
 
 =encoding utf8
 

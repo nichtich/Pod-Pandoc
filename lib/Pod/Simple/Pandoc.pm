@@ -393,7 +393,7 @@ sub _pod_data {
 
     RawBlock( $target, "$content\n" );
 
-    # TODO: add Null element to not merge with following content
+    # TODO: add Null element to not merge with following content?
 }
 
 # map a list (any kind)
@@ -467,7 +467,8 @@ L<Pandoc::Elements> and further processed with Pandoc to convert it to other
 document formats (HTML, Markdown, LaTeX, PDF, EPUB, docx, ODT, man...).
 
 See L<pod2pandoc> and L<App::pod2pandoc> for a command line script and a
-simplified API to this module.
+simplified API to this module and L<Pod::Pandoc::Web> for a web application
+that makes use of this module.
 
 =head1 OPTIONS
 
@@ -478,7 +479,7 @@ simplified API to this module.
 Parse Pod L<data sections|/Data sections> with L<Pandoc> and merge them into
 the document instead of passing them as C<RawBlock>. Use C<*> to parse all
 formats supported by pandoc as input format. Expects an array reference
-otherwise.
+such as C<['markdown','html']> otherwise. Disabled by default.
 
 =item podurl
 

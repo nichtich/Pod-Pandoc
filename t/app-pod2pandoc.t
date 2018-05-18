@@ -52,7 +52,7 @@ my ( $stdout, $stderr ) = output_from {
     pod2pandoc( [ 'lib/', 'script', 't/empty', $dir ],
         { 'ext' => 'md', wiki => 1, update => 1, index => 'Home' } );
 };
-is( ( scalar split "\n", $stdout ), 5, 'pod2pandoc directory, option update' );
+is( ( scalar split "\n", $stdout ), 6, 'pod2pandoc directory, option update' );
 is $stderr, "no .pm, .pod or Perl script found in t/empty\n", 'warning';
 
 ok -e catfile( $dir, 'Pod-Simple-Pandoc.md' ), 'option wiki';
