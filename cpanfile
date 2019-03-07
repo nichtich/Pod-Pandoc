@@ -4,6 +4,7 @@ requires 'perl', '5.014';
 requires 'Pod::Simple', '3.08';
 requires 'Pod::Usage';
 requires 'Getopt::Long';
+requires 'JSON';
 
 # additional modules
 requires 'Pandoc', '0.6.0';
