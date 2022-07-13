@@ -37,7 +37,7 @@ and convert Pod into other formats.
 
 Pod::Pandoc is an attempt to unify and extend Pod converting based on the
 L<Pandoc|http://pandoc.org/> document converter. Pandoc supports more document
-formats in a more detailled and uniform way than any set of Perl modules will
+formats in a more detailed and uniform way than any set of Perl modules will
 ever do. For this reason Pod::Pandoc provides methods to convert Pod to the
 Pandoc document model for further processing with Pandoc.
 
